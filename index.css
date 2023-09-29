@@ -1,0 +1,103 @@
+*{
+    box-sizing: border-box;
+}
+html, body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Rubik', sans-serif;
+    max-width: 1440px;
+    
+}
+:root{
+    /* primary color */
+    --Moderate-blue: hsl(238, 40%, 52%);
+    --Soft-Red: hsl(358, 79%, 66%);
+    --Light-grayish-blue: hsl(239, 57%, 85%);
+    --Pale-red: hsl(357, 100%, 86%);
+    /* natural-color */
+    --Dark-blue: hsl(212, 24%, 26%);
+    --Grayish-Blue: hsl(211, 10%, 45%);
+    --Light-gray: hsl(223, 19%, 93%);
+    --Very-light-gray: hsl(228, 33%, 97%);
+    --White: hsl(0, 0%, 100%);
+}
+
+/* all flex container */
+.username-wrapper, .scores-wrapper, .reply-wrapper, .reply {
+    display: flex;
+    align-items: center;
+}
+
+.main {
+   
+    padding: 2em 1em;
+    background-color: var(--Very-light-gray);
+    
+}
+.main-inner {
+    margin: 1em 0;
+    background-color: inherit;
+}
+.main-container {
+    background-color: var(--White);
+    margin: 2em 0;
+    padding: 1em;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    border-radius: 8px;
+}
+.username-wrapper, .scores-wrapper {
+    gap: 1.2em;
+}
+.username {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--Dark-blue);
+}
+.created, .content {
+    font-size: 20px;
+    color: var(--Grayish-Blue);
+    font-weight: 400;
+}
+.content {
+    line-height: 150%;
+    font-size: 17px;
+}
+.scores, .reply {
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--Moderate-blue);
+
+}
+.reply {
+    margin: 0 0 0 auto;
+    text-transform: capitalize;
+    gap: .5em;
+}
+.reply-line {
+}
+.replies-wrapper {
+    
+    padding-left: 1em;
+    border-left: 2px solid var(--Moderate-blue);
+    background-color: transparent;
+    background-color: var(--Light-grayish-blue);
+}
+.reply-wrapper.inner {
+    margin: 2em 0;
+}
+
+.scores-wrapper {
+    padding: 12px 15px;
+    background-color: var(--Very-light-gray);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    border-radius: 8px;
+}
+
+
+
