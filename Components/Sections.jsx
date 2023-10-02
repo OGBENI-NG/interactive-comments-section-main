@@ -1,7 +1,9 @@
 import React from 'react'
+import classNames from 'classnames'
 
-export default function Sections({children, ...props}) {
+export default function Sections({children, className, ...props}) {
+  const allClassNames = classNames(className)
   return (
-    <div {...props}>{children}</div>
+    <div className={allClassNames} {...props}>{children}</div>
   )
 }

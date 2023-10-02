@@ -147,25 +147,28 @@ html, body{
 .edit-wrapper .edit-btn {
     color: var(--Moderate-blue);
 }
-.add-comment-wrapper {
+.reply-section, .add-comment-wrapper {
     background-color: var(--White);
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
     border-radius: 8px;
+
+}
+.add-comment-wrapper {
     padding: 1em 1.5em 1.5em;
 }
-.add-comment-wrapper span {
+.add-comment-wrapper span, .reply-section span {
     display: block;
-    padding-bottom: .5em;
+    padding-bottom: .4em;
     color: var(--Grayish-Blue);
 }
 textarea {
     width: 100%;
     height: 100px;
     resize: none;
-    padding: 1em 1.2em;
+    padding: 1em .8em;
     font-size: 18px;
     color: var(--Dark-blue);
     outline: none;
@@ -198,7 +201,17 @@ textarea {
     text-transform: uppercase;
 
 }
+button.reply-btn {
+   padding: 8px 12px;
+}
 
+.reply-comment{
+    margin-top: -1em;
+}
+.reply-section {
+    padding: 1em;
+}
+ 
 
 
 
