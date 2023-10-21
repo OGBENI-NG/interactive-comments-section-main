@@ -12,6 +12,8 @@ const formatTimeDistance = (createdAt) => {
     // Customize the format based on the time elapsed
     if (distance.startsWith("less than a minute")) {
       return "just now";
+    } else if (distance.startsWith("about hour ago")) {
+        return "hour ago";
     }
 
     const [time, unit] = distance.split(" ");
