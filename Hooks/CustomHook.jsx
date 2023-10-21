@@ -8,20 +8,35 @@ export default function useCustomHook(initialValue) {
   const [messageText, setMessageText] = useState("");
   const { currentUser } = data;
   const isCurrentUser = currentUser.username
-  const [comments, setComments] = useState(data.comments);
+  const [comments, setComments] = useState(storedComments);
   const [commentText, setCommentText] = useState([])
   const [commentCharCount, setCommentCharCount] = useState({});
   const [newReplies, setNewReplies] = useState([]);
   const [newCommentReplies, setNewCommentReplies] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
-  const [showMaxTxt, setShowMaxTxt] = useState(false)
+  const [slide, setSlide] = useState(false)
   const maxTxt = 250;
+  
+  //saving comments in local storage
+  function storedComments() {
+    const storedComments = localStorage.getItem('comments');
+    return storedComments ? JSON.parse(storedComments) : data.comments;
+  }
 
-
+  // Function to update comments in localStorage
+  const updateCommentsInStorage = (comments) => {
+    localStorage.setItem('comments', JSON.stringify(comments));
+  };
+  
+ 
   // Use useCallback for functions that shouldn't trigger unnecessary rerenders
   const handleToggle = useCallback((index) => {
     setOpenIndex((prevOpenIndex) => (prevOpenIndex === index ? null : index));
   }, []);
+  const handleEditToggle = (commentId) => {
+    // Set isEditing to true and update the commentId being edited
+    setEditingCommentId(commentId);
+  }
 
   //handle like comments
   const handleLike = (commentId, isReply, replyId, replyIndex) => {
@@ -47,7 +62,6 @@ export default function useCustomHook(initialValue) {
       return updatedComments;
     });
   }
-
   //handle unlike comments
   const handleUnlike = (commentId, isReply, replyId) => {
     setComments((prevComments) => {
@@ -72,8 +86,48 @@ export default function useCustomHook(initialValue) {
       return updatedComments;
     });
   }
+  const handleLikeForReply = (commentId, isReply, replyId, replyIndex) => {
+    setNewReplies((prevReplies) =>
+      prevReplies.map((reply) => {
+        if (reply.id === replyId) {
+          const newScore = reply.liked ? reply.score : reply.score + 1;
+          return { ...reply, score: newScore, liked: true };
+        }
+        return reply;
+      })
+    );
+  
+    // You might need to update the main comments state as well if needed
+  };
+
+  const handleUnlikeForReply = (commentId, isReply, replyId, replyIndex) => {
+    setNewReplies((prevReplies) =>
+      prevReplies.map((reply) => {
+        if (reply.id === replyId) {
+          const newScore = reply.liked ? reply.score - 1 : reply.score;
+          return { ...reply, score: newScore, liked: false };
+        }
+        return reply;
+      })
+    );
+  
+    // You might need to update the main comments state as well if needed
+  };
+
+  function handleChange(e, commentId) {
+    const currentValue = e.target.value;
+    const charCount = currentValue.length;
+    setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [commentId]: charCount }));
+
+    if (currentValue.length > 0) {
+      const newValue = currentValue.charAt(0).toUpperCase() + currentValue.slice(1);
+      setCommentText((prevText) => ({ ...prevText, [commentId]: newValue }));
+    } else {
+      setCommentText((prevText) => ({ ...prevText, [commentId]: "" }));
+    }
+  }
   //handle change textarea for send comments
-  const handleChangeSend = (e) => {
+  const handleChangeSendNewComment = (e) => {
     const currentValue = e.target.value;
     setMessageText(currentValue);
     if (currentValue.length > 0) {
@@ -84,6 +138,7 @@ export default function useCustomHook(initialValue) {
       setTextArea("");
     }
   }
+
   //handle send new comments
   const handleSendComment = () => {
     const content = textArea
@@ -105,52 +160,14 @@ export default function useCustomHook(initialValue) {
           username: currentUser.username,
         },
       };
-      
-      setComments((prevComments) => [...prevComments, newComment,]);
+
+      const updatedComments = [...comments, newComment];
+      updateCommentsInStorage(updatedComments);
+      setComments(updatedComments);
       setTextArea("");
       setMessageText("");
       handleToggle(false)
-    }
-  }
-  //handle update comment in textarea
-  const handleUpdateComment = (commentId) => {
-    const commentToUpdate = comments.find(comment => comment.id === commentId);
-    
-    // Check if the text is empty or unchanged
-    if (!commentText[commentId] || commentText[commentId] === commentToUpdate.content) {
-      // If empty or unchanged, exit the function
-      setEditingCommentId(null);
-      return;
-    }
-  
-    // Update Comment Function
-    setComments((prevComments) =>
-      prevComments.map((comment) =>
-        comment.id === commentId
-          ? { ...comment, content: commentText[commentId] }
-          : comment
-      )
-    );
-  
-    // Clear the specific commentId in the commentText state
-    setCommentText((prevText) => ({ ...prevText, [commentId]: '' }));
-    // Clear the specific commentId in the commentCharCount state
-    setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [commentId]: 0 }));
-  
-    // Add any other logic you need
-    setEditingCommentId(null);
-  }
-
-  function handleChange(e, commentId) {
-    const currentValue = e.target.value;
-    const charCount = currentValue.length;
-    setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [commentId]: charCount }));
-
-    if (currentValue.length > 0) {
-      const newValue = currentValue.charAt(0).toUpperCase() + currentValue.slice(1);
-      setCommentText((prevText) => ({ ...prevText, [commentId]: newValue }));
-    } else {
-      setCommentText((prevText) => ({ ...prevText, [commentId]: "" }));
+      setSlide(true)
     }
   }
 
@@ -196,15 +213,40 @@ export default function useCustomHook(initialValue) {
     // Clear the specific commentId in the commentCharCount state
     setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [commentId]: 0 }));
     handleToggle(false);
+    setSlide(false)
   };
+  //handle update comment in textarea
+  const handleUpdateComment = (commentId) => {
+    const commentToUpdate = comments.find(comment => comment.id === commentId);
+    
+    // Check if the text is empty or unchanged
+    if (!commentText[commentId] || commentText[commentId] === commentToUpdate.content) {
+      // If empty or unchanged, exit the function
+      setEditingCommentId(null);
+      return;
+    }
   
+    // Update Comment Function
+      const updatedComments = comments.map((comment) =>
+      comment.id === commentId
+        ? { ...comment, content: commentText[commentId] }
+        : comment
+    );
 
-  const handleEditToggle = (commentId) => {
-    // Set isEditing to true and update the commentId being edited
-    setEditingCommentId(commentId);
-  }
+    // Update state with the new comments
+    setComments(updatedComments);
   
-  const handleUpdateReply = (commentId, replyId) => {
+    // Clear the specific commentId in the commentText state
+    setCommentText((prevText) => ({ ...prevText, [commentId]: '' }));
+    // Clear the specific commentId in the commentCharCount state
+    setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [commentId]: 0 }));
+  
+    // Add any other logic you need
+    setEditingCommentId(null);
+    updateCommentsInStorage(updatedComments)
+  }
+
+  const handleUpdateCommentReply = (commentId, replyId) => {
     setComments((prevComments) =>
       prevComments.map((comment) =>
         comment.id === commentId
@@ -227,7 +269,7 @@ export default function useCustomHook(initialValue) {
     // Add any other logic you need
     setEditingCommentId(null);
   };
-  
+
   const handleReplyForReply = (replyId, replyingToUser) => {
     const content = commentText[replyId] || ''
   
@@ -274,35 +316,10 @@ export default function useCustomHook(initialValue) {
     setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [replyId]: 0 }));
     setEditingCommentId(null);
     handleToggle(false);
-  };
+    setSlide(true)
+   
+  }
 
-  const handleLikeForReply = (commentId, isReply, replyId, replyIndex) => {
-    setNewReplies((prevReplies) =>
-      prevReplies.map((reply) => {
-        if (reply.id === replyId) {
-          const newScore = reply.liked ? reply.score : reply.score + 1;
-          return { ...reply, score: newScore, liked: true };
-        }
-        return reply;
-      })
-    );
-  
-    // You might need to update the main comments state as well if needed
-  };
-  const handleUnlikeForReply = (commentId, isReply, replyId, replyIndex) => {
-    setNewReplies((prevReplies) =>
-      prevReplies.map((reply) => {
-        if (reply.id === replyId) {
-          const newScore = reply.liked ? reply.score - 1 : reply.score;
-          return { ...reply, score: newScore, liked: false };
-        }
-        return reply;
-      })
-    );
-  
-    // You might need to update the main comments state as well if needed
-  };
-  
   const handleUpdateReplyForReply = (replyId) => {
     // Assuming you have a way to get the updated content from state
     const updatedContent = commentText[replyId];
@@ -311,9 +328,9 @@ export default function useCustomHook(initialValue) {
       prevReplies.map((reply) =>
         reply.id === replyId ? { ...reply, content: updatedContent || reply.content } : reply
       )
-    );
-  
-    // Clear the specific replyId in the commentText state
+      );
+      
+      // Clear the specific replyId in the commentText state
     setCommentText((prevText) => ({
       ...prevText,
       [replyId]: updatedContent || prevText[replyId] || '',
@@ -333,23 +350,79 @@ export default function useCustomHook(initialValue) {
         setOpenIndex(null);
       }
     };
-
+    
     document.addEventListener("click", handleClickOutside);
-
+    
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [handleToggle]);
+  
+  const handleDeleteComment = (commentId, replyId) => {
+    // You can add a confirmation dialog or any other checks here before deleting
+    setComments((prevComments) => {
+      // Filter out the comment with the specified commentId
+      const updatedComments = prevComments.filter((comment) => comment.id !== commentId);
+  
+      // Update localStorage with the updated comments
+      localStorage.setItem('comments', JSON.stringify(updatedComments));
+  
+      return updatedComments;
+    });
+  
+    console.log("deleted comments", commentId);
+  };
+  
+  const handleDeleteReplyInComment = (commentId, replyId) => {
+    // Remove the newReply from the newCommentReplies state
+    setNewCommentReplies((prevNewCommentReplies) =>
+      prevNewCommentReplies.filter((reply) => reply.id !== replyId)
+    );
+  
+    // Update the comments state to remove the newReply from the comment's replies
+    setComments((prevComments) =>
+      prevComments.map((comment) => {
+        if (comment.id === commentId) {
+          const updatedReplies = comment.replies.filter((reply) => reply.id !== replyId);
+          return { ...comment, replies: updatedReplies };
+        }
+        return comment;
+      })
+    );
+  };
 
+  const handleDeleteInReply = (replyId) => {
+    // Update the comments state to remove the deleted reply
+    setComments((prevComments) =>
+      prevComments.map((comment) => {
+        if (comment.replies) {
+          // Filter out the reply with the specified replyId
+          const updatedReplies = comment.replies.filter((reply) => reply.id !== replyId);
+          return { ...comment, replies: updatedReplies };
+        }
+        return comment;
+      })
+    );
+  
+    // Update the newReplies state to remove the deleted reply
+    setNewReplies((prevNewReplies) =>
+      prevNewReplies.filter((newReply) => newReply.id !== replyId)
+    );
+  
+    // Add any other logic you need
+  };
+  
   return { 
     commentWrapperRef, handleToggle, openIndex, comments,
-    handleLike, handleUnlike, textArea, handleChangeSend,
+    handleLike, handleUnlike, textArea, handleChangeSendNewComment,
     messageText, handleSendComment, isCurrentUser, commentText, 
     handleUpdateComment, commentCharCount, newCommentReplies, 
     newReplies, editingCommentId, handleChange, handleEditToggle,
     handleLikeForReply, handleUnlikeForReply, handleUpdateReplyForReply, 
-    handleReplyComment,handleUpdateReply,handleReplyForReply,currentUser,
-    data, showMaxTxt, maxTxt
+    handleReplyComment,handleUpdateCommentReply,handleReplyForReply,currentUser,
+    data, maxTxt, handleDeleteComment, handleDeleteReplyInComment, slide,
+    handleDeleteInReply
+   
 
   };
 }

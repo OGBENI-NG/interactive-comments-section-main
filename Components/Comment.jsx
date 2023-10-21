@@ -13,14 +13,16 @@ export default function Comment() {
   const {
     comments, commentWrapperRef, handleToggle,
     openIndex, handleLike, handleUnlike, textArea,
-    messageText, handleChangeSend, handleSendComment,
+    messageText, handleChangeSendNewComment, handleSendComment,
     isCurrentUser, commentText, handleUpdateComment,
     commentCharCount, newCommentReplies, newReplies,
     editingCommentId, handleChange, handleEditToggle,
     handleLikeForReply, handleUnlikeForReply, handleUpdateReplyForReply,
-    handleReplyComment, handleUpdateReply, handleReplyForReply,
-    currentUser, data, maxTxt, showMaxTxt
+    handleReplyComment, handleUpdateCommentReply, handleReplyForReply,
+    currentUser, data, maxTxt, handleDeleteComment, handleDeleteReplyInComment,
+    slide, handleDeleteInReply
   } = useCustomHook(null)
+
   
   //comment section
   const commentsSection = comments.map(
@@ -34,7 +36,7 @@ export default function Comment() {
     return (
       <Sections key={id}>
         {/* rendering comment and reply comment */}
-        <Sections className="comment-section">
+        <Sections className={`comment-section ${slide && "open-new-comment"}`}>
           <div className="comment-section-wrapper">
             <div className="username-wrapper">
               <img
@@ -56,6 +58,7 @@ export default function Comment() {
                 {editingCommentId === id ? (
                   <div className="edit-reply-inner">
                     <textarea
+                      name="textarea"
                       className="edit-textarea"
                       value={commentText[id] || content}
                       onChange={(e) => handleChange(e, id)}
@@ -89,7 +92,7 @@ export default function Comment() {
                 </div>
                 {username === isCurrentUser ? (
                   <div className="edit-wrapper">
-                    <p className="del-btn">
+                    <p className="del-btn" onClick={() => handleDeleteComment(id)}>
                       <img src={deleteIcon} alt="delete-icon" />
                       delete
                     </p>
@@ -110,7 +113,7 @@ export default function Comment() {
         </Sections>
         {openIndex === commentIndex && 
           <Sections
-            className="reply-section-inner" 
+            className={`reply-section-inner ${openIndex === commentIndex && 'open'}`} 
             style={{display: username === isCurrentUser ? "none" : ""}}
           >
             <span 
@@ -119,6 +122,7 @@ export default function Comment() {
               {commentCharCount[id] || 0}/{maxTxt}
             </span>
             <textarea
+              name="textarea"
               value={commentText[id] || ""}
               onChange={(e) => handleChange(e, id)}
               placeholder="Add a comment..."
@@ -133,6 +137,7 @@ export default function Comment() {
               </button>
             </div>
           </Sections>
+          //  new comments end here
         }
         {/* rendering the relies in comment */}
         {replies && replies.length > 0 && (
@@ -147,7 +152,7 @@ export default function Comment() {
               }
               ) => (
                 <Sections key={replyId}>
-                  <Sections className="reply-section">
+                  <Sections className={`reply-section  ${newReplies && "open"}`}>
                     <div className="username-wrapper reply-names-wrapper">
                       <img className="user-img" src={replyImage.png} alt={replyUsername} />
                       <p className="username reply-username">{replyUsername}</p>
@@ -183,7 +188,7 @@ export default function Comment() {
                     {editingCommentId === replyId ? (
                       <button 
                         className="update-btn"
-                        onClick={() => handleUpdateReply(id, replyId)}
+                        onClick={() => handleUpdateCommentReply(id, replyId)}
                       >update</button>
                       ):(
                       <div className="reply-wrapper">
@@ -203,7 +208,9 @@ export default function Comment() {
                         </div>
                         {replyUsername === isCurrentUser ? (
                           <div className="edit-wrapper">
-                            <p className="del-btn">
+                            <p 
+                              className="del-btn" 
+                              onClick={() => handleDeleteReplyInComment(id, replyId)}>
                               <img src={deleteIcon} alt="delete-icon" />
                               delete
                             </p>
@@ -226,8 +233,8 @@ export default function Comment() {
                   </Sections>
                   {openIndex === replyIndex && 
                     <Sections  
-                      className="reply-section-inner" 
-                      style={{display: replyUsername === isCurrentUser ? "none" : ""}}
+                      className={`reply-section-inner ${openIndex === replyIndex && "open"} `}
+                      style={{display: replyUsername === isCurrentUser && "none"}}
                     >
                       <span
                         style={{display: !commentCharCount[replyId] || 0 < 0 ? "none" : ""}}
@@ -250,9 +257,11 @@ export default function Comment() {
                     </Sections>}
                     {/* render newReply in replies */}
                     <div className="new-reply-for-replies">
-                    {newReplies.filter((newReply) => newReply.replyingTo === replyUsername).map((newReply) => (
+                    {newReplies
+                      .filter((newReply) => newReply.replyingTo === replyUsername)
+                      .map((newReply) => (
                       <div key={newReply.id}>
-                        <Sections className="reply-section">
+                        <Sections className={`reply-section ${slide ? "open" : ""}`}>
                           <div className="username-wrapper reply-names-wrapper">
                             <img className="user-img" src={newReply.user.image.png} alt={newReply.user.username} />
                             <p className="username reply-username">{newReply.user.username}</p>
@@ -270,6 +279,7 @@ export default function Comment() {
                             {editingCommentId === newReply.id ? (
                               <div className="edit-reply-inner">
                                 <textarea
+                                  name="textarea"
                                   className="edit-textarea"
                                   value={commentText[newReply.id] || newReply.content}
                                   onChange={(e) => handleChange(e, newReply.id)}
@@ -305,7 +315,9 @@ export default function Comment() {
                               </div>
                               {newReply.user.username === isCurrentUser ? (
                                 <div className="edit-wrapper">
-                                  <p className="del-btn">
+                                  <p className="del-btn" 
+                                  onClick={() => handleDeleteInReply(newReply.id, replyId, newReply.username)}
+                                  >
                                     <img src={deleteIcon} alt="delete-icon" />
                                     delete
                                   </p>
@@ -348,8 +360,9 @@ export default function Comment() {
           {messageText.length}/{maxTxt}
         </span>
         <textarea
+          name="textarea"
           value={textArea}
-          onChange={handleChangeSend}
+          onChange={handleChangeSendNewComment}
           placeholder="Add a comment..."
         />
         <div className="add-comment-inner">

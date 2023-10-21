@@ -16,17 +16,19 @@ const formatTimeDistance = (createdAt) => {
 
     const [time, unit] = distance.split(" ");
     // Handle special case for 'a minute'
-    if (time === "a") {
+    if (time === "a minute") {
       return "1m";
     }
 
+
+    
     // If the unit is not 'minute', display the full distance
     if (unit !== "minutes") {
       return distance;
     }
-
-    // Display like '1m', '2h', '3d', etc.
+    
     return `${time} ${unit} ago`;
+    // Display like '1m', '2h', '3d', etc.
   } catch (error) {
     // Handle invalid date format gracefully
     return "Invalid date";

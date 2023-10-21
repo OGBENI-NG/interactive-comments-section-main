@@ -6,6 +6,7 @@ html, body{
     padding: 0;
     font-family: 'Rubik', sans-serif;
     max-width: 1440px;
+    scroll-behavior: smooth;
     
 }
 :root{
@@ -182,15 +183,58 @@ html, body{
     padding: 1em;
     margin-top: 1.3em;
 }
+.open {
+    -webkit-animation: open .4s ease 0s 1 normal forwards;
+    animation: open .4s ease 0s 1 normal forwards;
+    
+}
+.open-new-comment {
+    -webkit-animation: slideIn .4s ease 0s 1 normal forwards;
+    animation: slideIn .4s ease 0s 1 normal forwards;
+}
+@keyframes slideIn {
+	0% {
+        -webkit-transform: translateY(25px);
+		-moz-transform: translateY(25px);
+		-ms-transform: translateY(25px);
+		-o-transform: translateY(25px);
+		transform: translateY(25px);
+		opacity: 0;
+}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
 .reply-section-inner {
     margin-top: .8em;
     padding: 1em;
+   
+}
+@keyframes open {
+	0% {
+		opacity: 0;
+		-webkit-transform: translateY(-25px);
+		-moz-transform: translateY(-25px);
+		-ms-transform: translateY(-25px);
+		-o-transform: translateY(-25px);
+		transform: translateY(-25px);
+    }
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 .send-comment-wrapper {
     padding: 1em 1.5em 1.5em;
     margin-top: .8em;
 }
-.send-comment-wrapper span, .reply-section span, .reply-section-inner span {
+.send-comment-wrapper span, 
+.reply-section span, 
+.reply-section-inner span {
     display: block;
     padding-bottom: .4em;
     color: var(--Grayish-Blue);
@@ -200,7 +244,7 @@ textarea {
     height: 100px;
     max-height: auto;
     resize: none;
-    padding: 1em .8em;
+    padding: .8em;
     font-size: 18px;
     color: var(--Dark-blue);
     outline: none;
@@ -216,10 +260,9 @@ textarea {
 }
 .edit-reply-inner {
     margin: .8em 0 .4em;
-    
 }
 .edit-reply-inner span {
-    font-size: .9em;
+    font-size: .978em;
     color: var(--Grayish-Blue);
     font-weight: 500;
 }
