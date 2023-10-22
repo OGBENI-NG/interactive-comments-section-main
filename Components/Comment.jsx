@@ -51,7 +51,9 @@ export default function Comment() {
               >
                 you
               </p>
-              <span className="date">{formattedTime}</span>
+              <span 
+                className="date"
+              >{formattedTime}</span>
             </div>
             <div>
               <div>
@@ -75,7 +77,7 @@ export default function Comment() {
                 onClick={() => handleUpdateComment(id)} 
                 className="update-btn"
               >update</button>
-            ) : (
+              ) : (
               <div className="reply-wrapper">
                 <div className="scores-wrapper">
                   <img
@@ -111,6 +113,9 @@ export default function Comment() {
             )}
           </div>
         </Sections>
+          {/* {username === isCurrentUser &&
+            (<div>it woli</div>)
+          } */}
         {openIndex === commentIndex && 
           <Sections
             className={`reply-section-inner ${openIndex === commentIndex && 'open'}`} 
@@ -162,7 +167,10 @@ export default function Comment() {
                       >
                         you
                       </p>
-                      <span className="date">
+                      <span 
+                        className="date" 
+    
+                      >
                         {newCommentReplies.some((newReply) => newReply.id === replyId)
                           ? formatTimeDistance(parseISO(replyCreatedAt))
                           : replyCreatedAt
@@ -271,7 +279,9 @@ export default function Comment() {
                             >
                               you
                             </p>
-                            <span className="date">
+                            <span 
+                              className="date" 
+          >
                               {formatTimeDistance(parseISO(newReply.createdAt))}
                             </span>
                           </div>

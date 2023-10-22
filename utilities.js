@@ -1,39 +1,49 @@
-import { formatDistanceToNow, parseISO } from "date-fns";
-import { enUS } from "date-fns/locale";
+import { 
+  differenceInSeconds, 
+  differenceInMinutes, 
+  differenceInHours, 
+  differenceInDays, 
+  differenceInWeeks, 
+  differenceInMonths, 
+  differenceInYears, 
+  parseISO } from "date-fns";
+
 
 const formatTimeDistance = (createdAt) => {
   try {
-    const distance = formatDistanceToNow(createdAt, {
-      addSuffix: true,
-      locale: enUS,
-    });
-    
+    const now = new Date();
+    const secondsDifference = differenceInSeconds(now, createdAt);
+    const minutesDifference = differenceInMinutes(now, createdAt);
+    const hoursDifference = differenceInHours(now, createdAt);
+    const daysDifference = differenceInDays(now, createdAt);
+    const weeksDifference = differenceInWeeks(now, createdAt);
+    const monthsDifference = differenceInMonths(now, createdAt);
+    const yearsDifference = differenceInYears(now, createdAt);
 
-    // Customize the format based on the time elapsed
-    if (distance.startsWith("less than a minute")) {
+    if (secondsDifference < 60) {
       return "just now";
-    } else if (distance.startsWith("about hour ago")) {
-        return "hour ago";
+    } else if (minutesDifference < 60) {
+      const formattedMinutes = minutesDifference === 1 ? "min" : "mins";
+      return `${minutesDifference} ${formattedMinutes} ago`;
+    } else if (hoursDifference < 24) {
+      const formattedHours = hoursDifference === 1 ? "hour" : "hours";
+      return `${hoursDifference} ${formattedHours} ago`;
+    } else if (daysDifference < 7) {
+      const formattedDays = daysDifference === 1 ? "day" : "days";
+      return `${daysDifference} ${formattedDays} ago`;
+    } else if (weeksDifference < 4) {
+      const formattedWeeks = weeksDifference === 1 ? "week" : "weeks";
+      return `${weeksDifference} ${formattedWeeks} ago`;
+    } else if (monthsDifference < 12) {
+      const formattedMonths = monthsDifference === 1 ? "month" : "months";
+      return `${monthsDifference} ${formattedMonths} ago`;
+    } else {
+      const formattedYears = yearsDifference === 1 ? "year" : "years";
+      return `${yearsDifference} ${formattedYears} ago`;
     }
-
-    const [time, unit] = distance.split(" ");
-    // Handle special case for 'a minute'
-    if (time === "a minute") {
-      return "1m";
-    }
-
-
-    
-    // If the unit is not 'minute', display the full distance
-    if (unit !== "minutes") {
-      return distance;
-    }
-    
-    return `${time} ${unit} ago`;
-    // Display like '1m', '2h', '3d', etc.
   } catch (error) {
-    // Handle invalid date format gracefully
     return "Invalid date";
   }
 };
-export {formatTimeDistance, parseISO} 
+
+export { formatTimeDistance, parseISO };
