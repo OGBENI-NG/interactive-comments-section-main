@@ -20,7 +20,7 @@ export default function Comment() {
     handleLikeForReply, handleUnlikeForReply, handleUpdateReplyForReply,
     handleReplyComment, handleUpdateCommentReply, handleReplyForReply,
     currentUser, data, maxTxt, handleDeleteComment, handleDeleteReplyInComment,
-    slide, handleDeleteInReply
+    slide, handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId
   } = useCustomHook(null)
 
   
@@ -94,7 +94,7 @@ export default function Comment() {
                 </div>
                 {username === isCurrentUser ? (
                   <div className="edit-wrapper">
-                    <p className="del-btn" onClick={() => handleDeleteComment(id)}>
+                    <p className="del-btn" onClick={() => handleToggleDelete(id)}>
                       <img src={deleteIcon} alt="delete-icon" />
                       delete
                     </p>
@@ -113,9 +113,33 @@ export default function Comment() {
             )}
           </div>
         </Sections>
-          {/* {username === isCurrentUser &&
-            (<div>it woli</div>)
-          } */}
+        <div>//modal for delete new comment
+          {username === isCurrentUser &&
+            <Sections 
+              className="delete-modal" 
+              style={{display: toggleDeleteCommentId !== id && "none"}}
+            >
+              <div>
+                {toggleDeleteCommentId === id  &&
+                  <section className="delete-notify-wrapper">
+                    <h2>Delete comment</h2>
+                    <p>
+                      Are you sure you want to delete this comment?
+                      This will remove the comment and can't be undone.
+                    </p>
+                    <section className="modal-btn-wrapper">
+                      <button className="modal-cancel-btn">no, cancel</button>
+                      <button 
+                        className="modal-delete-btn" 
+                        onClick={() => handleDeleteComment(id)}
+                      >yes delete</button>
+                    </section>
+                  </section>
+                }
+              </div>
+            </Sections>
+          }
+        </div>
         {openIndex === commentIndex && 
           <Sections
             className={`reply-section-inner ${openIndex === commentIndex && 'open'}`} 
@@ -280,8 +304,8 @@ export default function Comment() {
                               you
                             </p>
                             <span 
-                              className="date" 
-          >
+                              className="date"
+                            >
                               {formatTimeDistance(parseISO(newReply.createdAt))}
                             </span>
                           </div>

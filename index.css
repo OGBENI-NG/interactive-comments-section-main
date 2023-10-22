@@ -16,7 +16,8 @@ html, body{
     --Light-grayish-blue: hsl(239, 57%, 85%);
     --Pale-red: hsl(357, 100%, 86%);
     /* natural-color */
-    --Dark-blue: hsl(212, 24%, 26%);
+    --Dark-blue: hsl(213, 24%, 22%);
+    --Dark-blue-modal: hsla(0, 0%, 16%, 0.481);
     --Grayish-Blue: hsl(211, 10%, 45%);
     --Light-gray: hsl(223, 19%, 93%);
     --Very-light-gray: hsl(228, 33%, 97%);
@@ -25,7 +26,8 @@ html, body{
 
 /* all flex container */
 .username-wrapper, .scores-wrapper, .reply-wrapper, .reply,
-.add-comment-inner, .scores-wrapper-in-reply {
+.add-comment-inner, .scores-wrapper-in-reply,
+.modal-btn-wrapper {
     display: flex;
     align-items: center;
 }
@@ -120,7 +122,8 @@ html, body{
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     border-radius: 5px;
-    padding: .3em .4em;
+    padding-inline: 0;
+    padding: .3em;
 }
 .date {
     font-size: 16px;
@@ -291,10 +294,68 @@ textarea {
     border-radius: 8px;
     text-transform: uppercase;
 }
-
 button.reply-btn {
    padding: 8px 12px;
 }
+/* modal section */
+.delete-modal {
+    padding: 1em;
+    height: 100vh; /* Make the body take the full height of the viewport */
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center;
+    position: absolute;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    background-color: var(--Dark-blue-modal);
+    overflow: auto;
+    z-index: 1;
+   
+}
+.delete-notify-wrapper {
+    background-color: var(--White);
+    padding: 1.5em;
+    align-items: center;
+    line-height: 150%;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    border-radius: 8px;
+}
+.delete-notify-wrapper h2 {
+    margin: 0;
+    color: var(--Dark-blue);
+    font-weight: 500;
+    font-size: 1.5rem
+}
+.delete-notify-wrapper p {
+    margin: 1em 0;
+    font-size: 1.125rem;
+    color: var(--Grayish-Blue);
+}
+.modal-btn-wrapper {
+    justify-content: space-between;
+}
+.modal-cancel-btn, .modal-delete-btn {
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--White);
+    font-size: 1.2rem;
+    border: none;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    border-radius: 8px;
+    padding: .8em;
+    background-color: var(--Grayish-Blue);
+}
+.modal-delete-btn {
+    background-color: var(--Soft-Red);
+}
+
 
 
  

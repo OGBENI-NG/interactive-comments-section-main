@@ -14,6 +14,7 @@ export default function useCustomHook(initialValue) {
   const [newReplies, setNewReplies] = useState([]);
   const [newCommentReplies, setNewCommentReplies] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
+  const [toggleDeleteCommentId, setToggleDeleteCommentId] = useState(null);
   const [slide, setSlide] = useState(false)
   const maxTxt = 250;
   
@@ -36,6 +37,9 @@ export default function useCustomHook(initialValue) {
   const handleEditToggle = (commentId) => {
     // Set isEditing to true and update the commentId being edited
     setEditingCommentId(commentId);
+  }
+  function handleToggleDelete(commentId) {
+    setToggleDeleteCommentId(commentId);
   }
 
   //handle like comments
@@ -223,6 +227,7 @@ export default function useCustomHook(initialValue) {
     if (!commentText[commentId] || commentText[commentId] === commentToUpdate.content) {
       // If empty or unchanged, exit the function
       setEditingCommentId(null);
+      setToggleDeleteCommentId(null)
       return;
     }
   
@@ -243,6 +248,7 @@ export default function useCustomHook(initialValue) {
   
     // Add any other logic you need
     setEditingCommentId(null);
+    setToggleDeleteCommentId(null)
     updateCommentsInStorage(updatedComments)
   }
 
@@ -267,6 +273,7 @@ export default function useCustomHook(initialValue) {
     // Clear the specific replyId in the commentCharCount state
     setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [replyId]: 0 }));
     // Add any other logic you need
+    setToggleDeleteCommentId(null)
     setEditingCommentId(null);
   };
 
@@ -315,6 +322,7 @@ export default function useCustomHook(initialValue) {
     // Clear the specific replyId in the commentCharCount state
     setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [replyId]: 0 }));
     setEditingCommentId(null);
+    setToggleDeleteCommentId(null)
     handleToggle(false);
     setSlide(true)
    
@@ -339,6 +347,7 @@ export default function useCustomHook(initialValue) {
     setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [replyId]: 0 }));
     // Add any other logic you need
     setEditingCommentId(null);
+    setToggleDeleteCommentId(null)
   
     // You might need to update the main comments state as well if needed
   };
@@ -370,7 +379,7 @@ export default function useCustomHook(initialValue) {
       return updatedComments;
     });
   
-    console.log("deleted comments", commentId);
+    
   };
   
   const handleDeleteReplyInComment = (commentId, replyId) => {
@@ -421,7 +430,7 @@ export default function useCustomHook(initialValue) {
     handleLikeForReply, handleUnlikeForReply, handleUpdateReplyForReply, 
     handleReplyComment,handleUpdateCommentReply,handleReplyForReply,currentUser,
     data, maxTxt, handleDeleteComment, handleDeleteReplyInComment, slide,
-    handleDeleteInReply
+    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId
    
 
   };
