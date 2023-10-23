@@ -8,7 +8,7 @@ export default function useCustomHook(initialValue) {
   const [messageText, setMessageText] = useState("");
   const { currentUser } = data;
   const isCurrentUser = currentUser.username
-  const [comments, setComments] = useState(storedComments);
+  const [comments, setComments] = useState(data.comments);
   const [commentText, setCommentText] = useState([])
   const [commentCharCount, setCommentCharCount] = useState({});
   const [newReplies, setNewReplies] = useState([]);
@@ -18,17 +18,7 @@ export default function useCustomHook(initialValue) {
   const [slide, setSlide] = useState(false)
   const maxTxt = 250;
   
-  //saving comments in local storage
-  function storedComments() {
-    const storedComments = localStorage.getItem('comments');
-    return storedComments ? JSON.parse(storedComments) : data.comments;
-  }
-
-  // Function to update comments in localStorage
-  const updateCommentsInStorage = (comments) => {
-    localStorage.setItem('comments', JSON.stringify(comments));
-  };
-  
+ 
  
   // Use useCallback for functions that shouldn't trigger unnecessary rerenders
   const handleToggle = useCallback((index) => {
@@ -40,6 +30,9 @@ export default function useCustomHook(initialValue) {
   }
   function handleToggleDelete(commentId) {
     setToggleDeleteCommentId(commentId);
+  }
+  function handleCancelDelete(commentId) {
+    setToggleDeleteCommentId(false);
   }
 
   //handle like comments
@@ -165,9 +158,7 @@ export default function useCustomHook(initialValue) {
         },
       };
 
-      const updatedComments = [...comments, newComment];
-      updateCommentsInStorage(updatedComments);
-      setComments(updatedComments);
+      setComments([...comments, newComment]);
       setTextArea("");
       setMessageText("");
       handleToggle(false)
@@ -206,10 +197,8 @@ export default function useCustomHook(initialValue) {
         }
         return comment;
       });
-  
       return updatedComments;
     });
-  
     setNewCommentReplies((prevNewCommentReplies) => [...prevNewCommentReplies, newReply]);
   
     // Clear the specific commentId in the commentText state
@@ -218,6 +207,7 @@ export default function useCustomHook(initialValue) {
     setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [commentId]: 0 }));
     handleToggle(false);
     setSlide(false)
+    setToggleDeleteCommentId(null)
   };
   //handle update comment in textarea
   const handleUpdateComment = (commentId) => {
@@ -249,7 +239,6 @@ export default function useCustomHook(initialValue) {
     // Add any other logic you need
     setEditingCommentId(null);
     setToggleDeleteCommentId(null)
-    updateCommentsInStorage(updatedComments)
   }
 
   const handleUpdateCommentReply = (commentId, replyId) => {
@@ -322,7 +311,7 @@ export default function useCustomHook(initialValue) {
     // Clear the specific replyId in the commentCharCount state
     setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [replyId]: 0 }));
     setEditingCommentId(null);
-    setToggleDeleteCommentId(null)
+    setToggleDeleteCommentId(false)
     handleToggle(false);
     setSlide(true)
    
@@ -430,7 +419,8 @@ export default function useCustomHook(initialValue) {
     handleLikeForReply, handleUnlikeForReply, handleUpdateReplyForReply, 
     handleReplyComment,handleUpdateCommentReply,handleReplyForReply,currentUser,
     data, maxTxt, handleDeleteComment, handleDeleteReplyInComment, slide,
-    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId
+    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId,
+    handleCancelDelete
    
 
   };

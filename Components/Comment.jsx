@@ -7,6 +7,9 @@ import deleteIcon from "../images/icon-delete.svg"
 import Sections from "./Sections"
 import {formatTimeDistance, parseISO} from "../utilities"
 import useCustomHook from "../Hooks/CustomHook"
+import DeleteModal from "./DeleteModal"
+import TextArea from "./TextArea"
+import EditComment from "./EditComment"
 
 export default function Comment() {
   //all properties and elements of custom hooks console.log("typing..")
@@ -20,10 +23,10 @@ export default function Comment() {
     handleLikeForReply, handleUnlikeForReply, handleUpdateReplyForReply,
     handleReplyComment, handleUpdateCommentReply, handleReplyForReply,
     currentUser, data, maxTxt, handleDeleteComment, handleDeleteReplyInComment,
-    slide, handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId
+    slide, handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId,
+    handleCancelDelete
   } = useCustomHook(null)
 
-  
   //comment section
   const commentsSection = comments.map(
     ({ id, user: { image, username }, replies, content, score, createdAt},  commentIndex
@@ -58,15 +61,14 @@ export default function Comment() {
             <div>
               <div>
                 {editingCommentId === id ? (
-                  <div className="edit-reply-inner">
-                    <textarea
-                      name="textarea"
-                      className="edit-textarea"
-                      value={commentText[id] || content}
-                      onChange={(e) => handleChange(e, id)}
-                    />
-                    <span>{commentCharCount[id] || content.length}/{maxTxt}</span>
-                  </div>
+                  <TextArea
+                    id={id}
+                    content={content}
+                    handleChange={handleChange}
+                    commentText={commentText}
+                    commentCharCount={commentCharCount}
+                    maxTxt={maxTxt}
+                  />
                 ) : (
                   <p className="content">{content}</p>
                 )}
@@ -78,67 +80,37 @@ export default function Comment() {
                 className="update-btn"
               >update</button>
               ) : (
-              <div className="reply-wrapper">
-                <div className="scores-wrapper">
-                  <img
-                    src={plusIcon}
-                    alt="plus-icon"
-                    onClick={() => handleLike(id)}
-                  />
-                  <span className="scores">{score}</span>
-                  <img
-                    src={minusIcon}
-                    alt="minus-icon"
-                    onClick={() => handleUnlike(id)}
-                  />
-                </div>
-                {username === isCurrentUser ? (
-                  <div className="edit-wrapper">
-                    <p className="del-btn" onClick={() => handleToggleDelete(id)}>
-                      <img src={deleteIcon} alt="delete-icon" />
-                      delete
-                    </p>
-                    <p className="edit-btn" onClick={() => handleEditToggle(id)}>
-                      <img src={editIcon} alt="edit-icon"  />
-                      edit
-                    </p>
-                  </div>
-                  ) : (
-                  <span className="reply" onClick={() => handleToggle(commentIndex)}>
-                    <img src={replyIcon} alt="reply-icon" />
-                    reply
-                  </span>)
-                }
-              </div>
+                <EditComment
+                  id={id}
+                  score={score}
+                  plusIcon={plusIcon}
+                  minusIcon={minusIcon}
+                  replyIcon={replyIcon}
+                  deleteIcon={deleteIcon}
+                  editIcon={editIcon}
+                  handleLike={handleLike}
+                  handleUnlike={handleUnlike}
+                  username={username}
+                  isCurrentUser={isCurrentUser}
+                  handleEditToggle={handleEditToggle}
+                  handleToggleDelete={handleToggleDelete}
+                  handleToggle={handleToggle}
+                  commentIndex={commentIndex}
+                />
             )}
           </div>
         </Sections>
-        <div>//modal for delete new comment
-          {username === isCurrentUser &&
-            <Sections 
-              className="delete-modal" 
-              style={{display: toggleDeleteCommentId !== id && "none"}}
-            >
-              <div>
-                {toggleDeleteCommentId === id  &&
-                  <section className="delete-notify-wrapper">
-                    <h2>Delete comment</h2>
-                    <p>
-                      Are you sure you want to delete this comment?
-                      This will remove the comment and can't be undone.
-                    </p>
-                    <section className="modal-btn-wrapper">
-                      <button className="modal-cancel-btn">no, cancel</button>
-                      <button 
-                        className="modal-delete-btn" 
-                        onClick={() => handleDeleteComment(id)}
-                      >yes delete</button>
-                    </section>
-                  </section>
-                }
-              </div>
-            </Sections>
-          }
+        {/* modal for delete new comment */}
+        <div>
+          {username === isCurrentUser && (
+            <DeleteModal
+              display={toggleDeleteCommentId === id}
+              handleCancel={() => handleCancelDelete(id)}
+              handleDelete={() => handleDeleteComment(id)}
+              className={"delete-modal"}
+              style={{display: toggleDeleteCommentId !== id && "none"}} 
+            />
+          )}
         </div>
         {openIndex === commentIndex && 
           <Sections
@@ -203,14 +175,15 @@ export default function Comment() {
                     </div>
                     <div>
                       { editingCommentId === replyId ? (
-                        <div className="edit-reply-inner">
-                          <textarea
-                            className="edit-textarea"
-                            value={commentText[replyId] || replyContent}
-                            onChange={(e) => handleChange(e, replyId)}
-                          />
-                          <span>{commentCharCount[replyId] || replyContent.length}/{maxTxt}</span>
-                        </div>
+                        <TextArea 
+                          id={replyId}
+                          handleChange={handleChange}
+                          commentCharCount={commentCharCount}
+                          content={replyContent}
+                          maxTxt={maxTxt}
+                          commentText={commentText}
+                        />
+                        
                       ) : (
                         <p className="content reply-to">
                           @{replyToUser} <span>{replyContent}</span>
@@ -242,7 +215,8 @@ export default function Comment() {
                           <div className="edit-wrapper">
                             <p 
                               className="del-btn" 
-                              onClick={() => handleDeleteReplyInComment(id, replyId)}>
+                              onClick={() => handleToggleDelete(replyId)}
+                            >
                               <img src={deleteIcon} alt="delete-icon" />
                               delete
                             </p>
@@ -263,6 +237,17 @@ export default function Comment() {
                       </div>
                     )}
                   </Sections>
+                  <div>
+                    {replyUsername === isCurrentUser && (
+                      <DeleteModal
+                        display={toggleDeleteCommentId === replyId}
+                        handleCancel={() => handleCancelDelete(id, replyId)}
+                        handleDelete={() => handleDeleteReplyInComment(id, replyId)}
+                        className={"delete-modal"}
+                        style={{display: toggleDeleteCommentId !== replyId && "none"}} 
+                      />
+                    )}
+                  </div>
                   {openIndex === replyIndex && 
                     <Sections  
                       className={`reply-section-inner ${openIndex === replyIndex && "open"} `}
@@ -271,12 +256,13 @@ export default function Comment() {
                       <span
                         style={{display: !commentCharCount[replyId] || 0 < 0 ? "none" : ""}}
                       >
-                        {commentCharCount[replyId] || 0}/{maxTxt}</span>
+                      {commentCharCount[replyId] || 0}/{maxTxt}</span>
                       <textarea
                         value={commentText[replyId] || ""}
                         onChange={(e) => handleChange(e, replyId)}
                         placeholder="Add a comment..."
                       />
+
                       <div className="add-comment-inner">
                         <img src={currentUser.image.webp} alt="user-image" />
                         <button 
@@ -311,15 +297,14 @@ export default function Comment() {
                           </div>
                           <div>
                             {editingCommentId === newReply.id ? (
-                              <div className="edit-reply-inner">
-                                <textarea
-                                  name="textarea"
-                                  className="edit-textarea"
-                                  value={commentText[newReply.id] || newReply.content}
-                                  onChange={(e) => handleChange(e, newReply.id)}
-                                />
-                                <span>{commentCharCount[newReply.id] || newReply.content.length}/{maxTxt}</span>
-                              </div>
+                              <TextArea 
+                                id={newReply.id}
+                                commentCharCount={commentCharCount}
+                                commentText={commentText}
+                                content={newReply.content}
+                                maxTxt={maxTxt}
+                                handleChange={handleChange}
+                              />
                             ) : (
                               <p className="content reply-to">
                                 @{newReply.replyingTo} <span>{newReply.content}</span>
@@ -331,7 +316,7 @@ export default function Comment() {
                               className="update-btn"
                               onClick={() => handleUpdateReplyForReply(newReply.id, replyIndex, replyId)}
                             >update</button>
-                          ) : (
+                            ) : (
                             <div className="reply-wrapper">
                               <div className="scores-wrapper-in-reply">
                                 <img
@@ -350,7 +335,8 @@ export default function Comment() {
                               {newReply.user.username === isCurrentUser ? (
                                 <div className="edit-wrapper">
                                   <p className="del-btn" 
-                                  onClick={() => handleDeleteInReply(newReply.id, replyId, newReply.username)}
+                                  onClick={() => handleToggleDelete(newReply.id)}
+                                  
                                   >
                                     <img src={deleteIcon} alt="delete-icon" />
                                     delete
@@ -372,6 +358,17 @@ export default function Comment() {
                             </div>
                           )}
                         </Sections>
+                        <div>
+                          {newReply.user.username === isCurrentUser &&
+                          <DeleteModal
+                            display={toggleDeleteCommentId}
+                            handleCancel={() => handleCancelDelete(newReply.id, replyId)}
+                            handleDelete={() => handleDeleteInReply(newReply.id, replyId, newReply.username)}
+                            className={"delete-modal"}
+                            style={{display: toggleDeleteCommentId !== newReply.id && "none"}} 
+                          />
+                          }
+                        </div>
                       </div>
                     ))} 
                   </div>

@@ -300,9 +300,9 @@ button.reply-btn {
 /* modal section */
 .delete-modal {
     padding: 1em;
-    height: 100vh; /* Make the body take the full height of the viewport */
+    height: 100vh;
     display: flex;
-    align-items: center; /* Center vertically */
+    align-items: center;
     justify-content: center;
     position: absolute;
     position: fixed;
@@ -311,7 +311,35 @@ button.reply-btn {
     background-color: var(--Dark-blue-modal);
     overflow: auto;
     z-index: 1;
-   
+}
+.open-modal {
+    -webkit-animation: scaleIn .4s ease 0s 1 normal forwards;
+    animation: scaleIn .3s ease 0s 1 normal forwards;
+}
+
+@keyframes scaleIn {
+	0% {
+		transform: scale(0);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+.exit-modal {
+    -webkit-animation: exit .3s ease 0s 1 normal forwards;
+    animation: exit .3s ease 0s 1 normal forwards;
+}
+@keyframes exit {
+	0% {
+		opacity: 1;
+		transform: scale(1.5);
+    }
+
+	100% {
+		opacity: 0;
+		transform: scale(0);
+    }
 }
 .delete-notify-wrapper {
     background-color: var(--White);
@@ -323,6 +351,7 @@ button.reply-btn {
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
     border-radius: 8px;
+    
 }
 .delete-notify-wrapper h2 {
     margin: 0;
