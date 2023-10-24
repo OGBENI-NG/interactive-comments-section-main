@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function EditComment({ 
+export default function EditWrapper({ 
       id, plusIcon, minusIcon, 
       deleteIcon,replyIcon,score,
       commentIndex, handleLike, handleUnlike, 
@@ -21,6 +21,7 @@ export default function EditComment({
                         <span className="scores">{score}</span>
                         <button className='minus-icon'>
                               <img
+                                    className='minus'
                                     src={minusIcon}
                                     alt="minus-icon"
                                     onClick={() => handleUnlike(id)}

@@ -9,7 +9,7 @@ import {formatTimeDistance, parseISO} from "../utilities"
 import useCustomHook from "../Hooks/CustomHook"
 import DeleteModal from "./DeleteModal"
 import TextArea from "./TextArea"
-import EditComment from "./EditComment"
+import EditWrapper from "./EditWrapper"
 
 export default function Comment() {
   //all properties and elements of custom hooks console.log("typing..")
@@ -80,7 +80,7 @@ export default function Comment() {
                 className="update-btn"
               >update</button>
               ) : (
-                <EditComment
+                <EditWrapper
                   id={id}
                   score={score}
                   plusIcon={plusIcon}
@@ -196,7 +196,7 @@ export default function Comment() {
                         onClick={() => handleUpdateCommentReply(id, replyId)}
                       >update</button>
                       ):(
-                        <EditComment 
+                        <EditWrapper 
                           id={replyId}
                           plusIcon={plusIcon}
                           minusIcon={minusIcon}
@@ -296,7 +296,7 @@ export default function Comment() {
                               onClick={() => handleUpdateReplyForReply(newReply.id, replyIndex, replyId)}
                             >update</button>
                             ) : (
-                              <EditComment 
+                              <EditWrapper 
                                 plusIcon={plusIcon}
                                 minusIcon={minusIcon}
                                 deleteIcon={deleteIcon}
