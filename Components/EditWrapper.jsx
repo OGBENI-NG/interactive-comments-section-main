@@ -30,8 +30,8 @@ export default function EditWrapper({
                               />
                         </button>
                   </div>
-                  <Sections className={`delete-and-edit-wrapper ${currentUser && "userEdit-Wrapper"}`}>
-                        { currentUser ? (
+                  <Sections className={`delete-and-edit-wrapper`}>
+                        {currentUser ? (
                               <div className="edit-wrapper">
                                     <button className="del-btn" onClick={() => handleToggleDelete(id)}>
                                           <img src={deleteIcon} alt="delete-icon" />
