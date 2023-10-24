@@ -42,21 +42,15 @@ export default function Comment() {
         <Sections className={`comment-section ${slide && "open-new-comment"}`}>
           <div className="comment-section-wrapper">
             <div className="username-wrapper">
-              <img
-                className="user-img"
-                src={image.png}
-                alt={username}
+              <img className="user-img" src={image.png} alt={username}
               />
               <p className="username">{username}</p>
               <p
                 className={`you`}
                 style={{ display: username === isCurrentUser ? "" : "none" }}
-              >
-                you
+              >you
               </p>
-              <span 
-                className="date"
-              >{formattedTime}</span>
+              <span className="date">{formattedTime}</span>
             </div>
             <div>
               <div>

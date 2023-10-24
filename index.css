@@ -203,13 +203,17 @@ html, body{
     margin-top: 1.3em ;
     color: var(--Grayish-Blue);
 }
+.reply-section-inner {
+    margin-top: .8em;
+    padding: 1em;
+}
 .open {
-    -webkit-animation: open .4s ease 0s 1 normal forwards;
-    animation: open .4s ease 0s 1 normal forwards;
+    -webkit-animation: open .3s ease 0s 1 normal forwards;
+    animation: open .3s ease 0s 1 normal forwards;
 }
 .open-new-comment {
-    -webkit-animation: slideIn .4s ease 0s 1 normal forwards;
-    animation: slideIn .4s ease 0s 1 normal forwards;
+    -webkit-animation: slideIn .3s ease 0s 1 normal forwards;
+    animation: slideIn .3s ease 0s 1 normal forwards;
 }
 @keyframes slideIn {
 	0% {
@@ -226,10 +230,7 @@ html, body{
 		transform: translateY(0);
 	}
 }
-.reply-section-inner {
-    margin-top: .8em;
-    padding: 1em;
-}
+
 @keyframes open {
 	0% {
 		opacity: 0;
@@ -394,6 +395,9 @@ button.reply-btn {
 }
 .modal-delete-btn {
     background-color: var(--Soft-Red);
+}
+button {
+    outline: none;
 }
 
 
