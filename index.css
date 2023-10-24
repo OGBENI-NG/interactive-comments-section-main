@@ -152,7 +152,7 @@ html, body{
     gap: .7em;
 }
 .reply-wrapper {
- gap: .5em;
+ gap: 1em;
 }
 .reply-username {
     font-size: 18px;
