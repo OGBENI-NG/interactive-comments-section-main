@@ -28,7 +28,7 @@ html, body{
 .username-wrapper, .scores-wrapper, .reply-wrapper, .reply,
 .add-comment-inner, .scores-wrapper-in-reply,
 .modal-btn-wrapper, .del-btn, .edit-btn, .edit-wrapper button, 
-.edit-wrapper, .plus-icon .minus-icon {
+.edit-wrapper, .plus-btn .minus-btn .delete-and-edit-wrapper {
     display: flex;
     align-items: center;
 }
@@ -56,7 +56,7 @@ html, body{
     margin: 1.1em 0 1.3em;
 }
 .scores-wrapper {
-    gap: .9em;
+    gap: 0.8em;
 }
 .username-wrapper{
     gap: .8em;
@@ -148,16 +148,16 @@ html, body{
     gap: 1.2em;
     padding: 12px 15px;
 }
-
-.reply-names-wrapper{
+.reply-names-wrapper, .edit-wrapper{
     gap: .7em;
 }
 .reply-username {
     font-size: 18px;
 }
-.edit-wrapper {
+.delete-and-edit-wrapper {
     margin: 0 0 0 auto;
 }
+
 .edit-wrapper button {
     gap: .25em;
     font-weight: 700;
@@ -176,7 +176,7 @@ html, body{
 .edit-wrapper .edit-btn {
     color: var(--Moderate-blue);
 }
-.plus-icon, .minus-icon {
+.plus-btn, .minus-btn {
     height: 30px;
     width: 30px;
     border: none;
