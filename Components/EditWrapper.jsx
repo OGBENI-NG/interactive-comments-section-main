@@ -30,14 +30,12 @@ export default function EditWrapper({
                               />
                         </button>
                   </div>
-                  <Sections className={`delete-and-edit-wrapper`}>
+                  <Sections className={`${currentUser ? "delete-and-edit-wrapper" : ""}`}>
                         {currentUser ? (
                               <div className="edit-wrapper">
-                                    <button className="del-btn" onClick={() => handleToggleDelete(id)}>
-                                          <img src={deleteIcon} alt="delete-icon" />delete
+                                    <button className="del-btn" onClick={() => handleToggleDelete(id)}><img src={deleteIcon} alt="delete-icon" />delete
                                     </button>
-                                    <button className="edit-btn" onClick={() => handleEditToggle(id)}>
-                                          <img src={editIcon} alt="edit-icon"  />edit
+                                    <button className="edit-btn" onClick={() => handleEditToggle(id)}><img src={editIcon} alt="edit-icon"  />edit
                                     </button>
                               </div>
                               ) : (
