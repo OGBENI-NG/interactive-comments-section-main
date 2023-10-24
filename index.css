@@ -157,6 +157,9 @@ html, body{
 .delete-and-edit-wrapper {
     margin: 0 0 0 auto;
 }
+.edit-wrapper {
+    border: 1px solid #333;
+}
 
 .edit-wrapper button {
     gap: .25em;
@@ -184,6 +187,7 @@ html, body{
 }
 .minus {
     padding-bottom: .2em;
+    margin-left: -.15em;
 }
 .reply-section, .send-comment-wrapper, .reply-section-inner {
     background-color: var(--White);
