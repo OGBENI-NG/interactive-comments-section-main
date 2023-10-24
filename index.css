@@ -183,7 +183,7 @@ html, body{
     background-color: inherit;
 }
 .minus {
-    padding-bottom: .15em;
+    padding-bottom: .2em;
 }
 .reply-section, .send-comment-wrapper, .reply-section-inner {
     background-color: var(--White);
