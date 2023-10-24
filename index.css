@@ -148,7 +148,7 @@ html, body{
     gap: 1.2em;
     padding: 12px 15px;
 }
-.reply-names-wrapper, .edit-wrapper{
+.reply-names-wrapper{
     gap: .7em;
 }
 .reply-username {
