@@ -88,11 +88,12 @@ html, body{
 }
 
 .reply {
-    
+    justify-self: flex-end;
     text-transform: capitalize;
-    gap: .5em;
+    gap: .15em;
     border: none;
     background-color: transparent;
+    padding: 0;
 }
 .reply-to {
     font-weight: 700;
@@ -149,10 +150,8 @@ html, body{
     font-size: 18px;
 }
 
-
-
 .edit-wrapper button {
-    gap: .25em;
+    gap: .18em;
     font-weight: 700;
     font-size: 17px;
     text-transform: capitalize;
