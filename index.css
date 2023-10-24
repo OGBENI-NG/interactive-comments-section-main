@@ -160,6 +160,11 @@ html, body{
 .delete-and-edit-wrapper {
     margin: 0 0 0 auto;
 }
+.userEdit-Wrapper {
+    border: 1px solid red;
+    display: inline-block;
+    margin-left: auto;
+}
 .edit-wrapper {
     margin: 0;
 }

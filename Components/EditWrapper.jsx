@@ -6,9 +6,9 @@ export default function EditWrapper({
       deleteIcon,replyIcon,score,
       commentIndex, handleLike, handleUnlike, 
       handleToggleDelete, handleEditToggle, handleToggle,
-      username, isCurrentUser, editIcon, className
+      username, isCurrentUser, editIcon
       }) {
-     
+      const currentUser = username === isCurrentUser
       return (
             <div className="reply-wrapper">
                   <div className="scores-wrapper">
@@ -30,8 +30,8 @@ export default function EditWrapper({
                               />
                         </button>
                   </div>
-                  <Sections className={className}>
-                        {username === isCurrentUser ? (
+                  <Sections className={`delete-and-edit-wrapper ${currentUser && "userEdit-Wrapper"}`}>
+                        { currentUser ? (
                               <div className="edit-wrapper">
                                     <button className="del-btn" onClick={() => handleToggleDelete(id)}>
                                           <img src={deleteIcon} alt="delete-icon" />
