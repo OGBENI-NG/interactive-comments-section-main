@@ -141,17 +141,14 @@ html, body{
 .reply-names-wrapper{
     gap: .7em;
 }
-.reply-wrapper {
+.reply-wrapper, .edit-wrapper {
  gap: 1em;
+ justify-content: space-between;
 }
 .reply-username {
     font-size: 18px;
 }
 
-
-.edit-wrapper {
-    margin: 0;
-}
 
 
 .edit-wrapper button {
