@@ -196,45 +196,24 @@ export default function Comment() {
                         onClick={() => handleUpdateCommentReply(id, replyId)}
                       >update</button>
                       ):(
-                      <div className="reply-wrapper">
-                        <div className="scores-wrapper-in-reply" >
-                          <img
-                            src={plusIcon}
-                            alt="plus-icon"
-                            onClick={() => handleLike(id, true, replyId, replyIndex)}
+                        <EditComment 
+                          id={replyId}
+                          plusIcon={plusIcon}
+                          minusIcon={minusIcon}
+                          replyIcon={replyIcon}
+                          deleteIcon={deleteIcon}
+                          editIcon={editIcon}
+                          username={replyUsername}
+                          replyId={replyId}
+                          handleLike={() => handleLike(id, true, replyId, replyIndex)}
+                          handleUnlike={() => handleUnlike(id, true, replyId, replyIndex)}
+                          handleToggle={() => handleToggle(replyIndex)}
+                          handleEditToggle={handleEditToggle}
+                          handleToggleDelete={handleToggleDelete}
+                          score={replyScore}
+                          isCurrentUser={isCurrentUser}
                           
-                          />
-                          <span className="scores-in-replies">{replyScore}</span>
-                          <img
-                            src={minusIcon}
-                            alt="minus-icon"
-                            onClick={() => handleUnlike(id, true, replyId, replyIndex)} 
-                          />
-                        </div>
-                        {replyUsername === isCurrentUser ? (
-                          <div className="edit-wrapper">
-                            <p 
-                              className="del-btn" 
-                              onClick={() => handleToggleDelete(replyId)}
-                            >
-                              <img src={deleteIcon} alt="delete-icon" />
-                              delete
-                            </p>
-                            <p className="edit-btn" onClick={() => handleEditToggle(replyId)}>
-                              <img src={editIcon} alt="edit-icon" />
-                              edit
-                            </p>
-                          </div>
-                        ) : (
-                          <span 
-                            className="reply reply-in-replies"
-                            onClick={() => handleToggle(replyIndex)}
-                          >
-                            <img src={replyIcon} alt="reply-icon" />
-                            reply
-                          </span>
-                        )}
-                      </div>
+                        />
                     )}
                   </Sections>
                   <div>
@@ -317,45 +296,23 @@ export default function Comment() {
                               onClick={() => handleUpdateReplyForReply(newReply.id, replyIndex, replyId)}
                             >update</button>
                             ) : (
-                            <div className="reply-wrapper">
-                              <div className="scores-wrapper-in-reply">
-                                <img
-                                  src={plusIcon}
-                                  alt="plus-icon"
-                                  onClick={() => handleLikeForReply(id, true, newReply.id, replyIndex)}
-
-                                />
-                                <span className="scores-in-replies">{newReply.score}</span>
-                                <img
-                                  src={minusIcon}
-                                  alt="minus-icon"
-                                  onClick={() => handleUnlikeForReply(id, true, newReply.id, replyIndex)}
-                                />
-                              </div>
-                              {newReply.user.username === isCurrentUser ? (
-                                <div className="edit-wrapper">
-                                  <p className="del-btn" 
-                                  onClick={() => handleToggleDelete(newReply.id)}
-                                  
-                                  >
-                                    <img src={deleteIcon} alt="delete-icon" />
-                                    delete
-                                  </p>
-                                  <p className="edit-btn" onClick={() => handleEditToggle(newReply.id)}>
-                                    <img src={editIcon} alt="edit-icon" />
-                                    edit
-                                  </p>
-                                </div>
-                              ) : (
-                                <span
-                                  className="reply reply-in-replies"
-                                  onClick={() => handleToggle(replyIndex)}
-                                >
-                                  <img src={replyIcon} alt="reply-icon" />
-                                  reply
-                                </span>
-                              )}
-                            </div>
+                              <EditComment 
+                                plusIcon={plusIcon}
+                                minusIcon={minusIcon}
+                                deleteIcon={deleteIcon}
+                                user={newReply.user}
+                                editIcon={editIcon}
+                                username={newReply.username}
+                                isCurrentUserReply={newReply.user.username === isCurrentUser}
+                                id={newReply.id}
+                                replyIndex={replyIndex}
+                                score={newReply.score}
+                                handleLike={() => handleLikeForReply(id, true, newReply.id, replyIndex)}
+                                handleUnlike={() => handleUnlikeForReply(id, true, newReply.id, replyIndex)}
+                                handleEditToggle={handleEditToggle}
+                                handleToggleDelete={handleToggleDelete}
+                                handleToggle={() => handleToggle(replyIndex)}
+                              />
                           )}
                         </Sections>
                         <div>

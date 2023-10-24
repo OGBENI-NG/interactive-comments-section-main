@@ -27,7 +27,8 @@ html, body{
 /* all flex container */
 .username-wrapper, .scores-wrapper, .reply-wrapper, .reply,
 .add-comment-inner, .scores-wrapper-in-reply,
-.modal-btn-wrapper {
+.modal-btn-wrapper, .del-btn, .edit-btn, .edit-wrapper button, 
+.edit-wrapper {
     display: flex;
     align-items: center;
 }
@@ -55,7 +56,7 @@ html, body{
     margin: 1.1em 0 1.3em;
 }
 .scores-wrapper {
-    gap: 1.2em;
+    gap: 1em;
 }
 .username-wrapper{
     gap: .8em;
@@ -78,6 +79,7 @@ html, body{
 .content {
     line-height: 150%;
     font-size: 17px;
+    margin: .5em auto;
 }
 .scores,  .reply, .scores-wrapper-in-reply > .scores-in-replies {
     font-weight: 700;
@@ -96,6 +98,8 @@ html, body{
     margin: 0 0 0 auto;
     text-transform: capitalize;
     gap: .5em;
+    border: none;
+    background-color: transparent;
 }
 .reply-to {
     font-weight: 700;
@@ -106,6 +110,7 @@ html, body{
     font-weight: 400;
     font-size: 17px;
     color: var(--Grayish-Blue);
+    display: block;
 }
 .replies-container {
     padding-left: 1em;
@@ -123,7 +128,7 @@ html, body{
     -o-border-radius: 5px;
     border-radius: 5px;
     padding-inline: 0;
-    padding: .3em;
+    padding: .3em .6em;
 }
 .date {
     font-size: 16px;
@@ -131,7 +136,7 @@ html, body{
 }
 
 .scores-wrapper, .scores-wrapper-in-reply {
-    padding: 12px 15px;
+    padding: .5em .4em;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
@@ -143,6 +148,7 @@ html, body{
     gap: 1.2em;
     padding: 12px 15px;
 }
+
 .reply-names-wrapper{
     gap: .7em;
 }
@@ -151,18 +157,17 @@ html, body{
 }
 .edit-wrapper {
     margin: 0 0 0 auto;
-    display: flex;
-    align-items: center;
     gap: 1.2em;
 }
-.edit-wrapper p {
-    display: flex;
+.edit-wrapper button {
     gap: .3em;
     font-weight: 700;
     font-size: 17px;
     text-transform: capitalize;
+    background-color: inherit;
+    border: none;
 }
-.edit-wrapper p img {
+.edit-wrapper  img {
     width: 20px;
     height: 18px;
 }
@@ -172,6 +177,12 @@ html, body{
 .edit-wrapper .edit-btn {
     color: var(--Moderate-blue);
 }
+.plus-icon, .minus-icon {
+    height: 25px;
+    width: 25px;
+    border: none;
+    background-color: inherit;
+}
 .reply-section, .send-comment-wrapper, .reply-section-inner {
     background-color: var(--White);
     -webkit-border-radius: 8px;
@@ -179,7 +190,6 @@ html, body{
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
     border-radius: 8px;
-    
 }
 .reply-comment{
     margin-top: .5em;
@@ -187,12 +197,12 @@ html, body{
 
 .reply-section{
     padding: 1em;
-    margin-top: 1.3em;
+    margin-top: 1.3em ;
+    color: var(--Grayish-Blue);
 }
 .open {
     -webkit-animation: open .4s ease 0s 1 normal forwards;
     animation: open .4s ease 0s 1 normal forwards;
-    
 }
 .open-new-comment {
     -webkit-animation: slideIn .4s ease 0s 1 normal forwards;
@@ -238,8 +248,7 @@ html, body{
     padding: 1em 1.5em 1.5em;
     margin-top: .8em;
 }
-.send-comment-wrapper span, 
-.reply-section span, 
+.send-comment-wrapper span,  
 .reply-section-inner span {
     display: block;
     padding-bottom: .4em;
@@ -267,6 +276,7 @@ textarea {
 .edit-reply-inner {
     margin: .8em 0 .4em;
 }
+
 .edit-reply-inner span {
     font-size: .978em;
     color: var(--Grayish-Blue);
