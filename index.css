@@ -157,7 +157,7 @@ html, body{
 }
 .edit-wrapper {
     margin: 0 0 0 auto;
-    gap: .9em;
+    gap: .5em;
     border: 1px solid #ccc;
 }
 .edit-wrapper button {
