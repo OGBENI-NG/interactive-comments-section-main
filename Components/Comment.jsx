@@ -312,6 +312,7 @@ export default function Comment() {
                                 handleEditToggle={handleEditToggle}
                                 handleToggleDelete={handleToggleDelete}
                                 handleToggle={() => handleToggle(replyIndex)}
+                                
                               />
                           )}
                         </Sections>
