@@ -396,7 +396,8 @@ button.reply-btn {
 .modal-delete-btn {
     background-color: var(--Soft-Red);
 }
-button {
+button:focus,
+button:active {
     outline: none;
 }
 
