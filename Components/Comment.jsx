@@ -10,8 +10,11 @@ import useCustomHook from "../Hooks/CustomHook"
 import DeleteModal from "./DeleteModal"
 import TextArea from "./TextArea"
 import EditWrapper from "./EditWrapper"
+import ReplyWrapper from "./ReplyWrapper"
+import UsernameWrapper from "./UserNameWrapper"
 
 export default function Comment() {
+  
   //all properties and elements of custom hooks console.log("typing..")
   const {
     comments, commentWrapperRef, handleToggle,
@@ -35,23 +38,20 @@ export default function Comment() {
     const formattedTime = commentIndex >= data.comments.length
       ? formatTimeDistance(parseISO(createdAt))
       : createdAt
+      
     
     return (
       <Sections key={id}>
         {/* rendering comment and reply comment */}
         <Sections className={`comment-section ${slide && "open-new-comment"}`}>
           <div className="comment-section-wrapper">
-            <div className="username-wrapper">
-              <img className="user-img" src={image.png} alt={username}
+            <UsernameWrapper
+                imageSrc={image.png}
+                altText={username}
+                username={username}
+                isCurrentUser={isCurrentUser}
+                formattedTime={formattedTime}
               />
-              <p className="username">{username}</p>
-              <p
-                className={`you`}
-                style={{ display: username === isCurrentUser ? "" : "none" }}
-              >you
-              </p>
-              <span className="date">{formattedTime}</span>
-            </div>
             <div>
               <div>
                 {editingCommentId === id ? (
@@ -74,23 +74,23 @@ export default function Comment() {
                 className="update-btn"
               >update</button>
               ) : (
-                <EditWrapper
-                  id={id}
-                  score={score}
-                  plusIcon={plusIcon}
-                  minusIcon={minusIcon}
-                  replyIcon={replyIcon}
-                  deleteIcon={deleteIcon}
-                  editIcon={editIcon}
-                  handleLike={handleLike}
-                  handleUnlike={handleUnlike}
-                  username={username}
-                  isCurrentUser={isCurrentUser}
-                  handleEditToggle={handleEditToggle}
-                  handleToggleDelete={handleToggleDelete}
-                  handleToggle={handleToggle}
-                  commentIndex={commentIndex}
-                />
+              <EditWrapper
+                id={id}
+                score={score}
+                plusIcon={plusIcon}
+                minusIcon={minusIcon}
+                replyIcon={replyIcon}
+                deleteIcon={deleteIcon}
+                editIcon={editIcon}
+                handleLike={handleLike}
+                handleUnlike={handleUnlike}
+                username={username}
+                isCurrentUser={isCurrentUser}
+                handleEditToggle={handleEditToggle}
+                handleToggleDelete={handleToggleDelete}
+                handleToggle={handleToggle}
+                commentIndex={commentIndex}
+              />
             )}
           </div>
         </Sections>
@@ -107,31 +107,20 @@ export default function Comment() {
           )}
         </div>
         {openIndex === commentIndex && 
-          <Sections
-            className={`reply-section-inner ${openIndex === commentIndex && 'open'}`} 
-            style={{display: username === isCurrentUser ? "none" : ""}}
-          >
-            <span 
-              style={{display: !commentCharCount[id] || 0 < 0 ? "none" : ""}}
-            >
-              {commentCharCount[id] || 0}/{maxTxt}
-            </span>
-            <textarea
-              name="textarea"
-              value={commentText[id] || ""}
-              onChange={(e) => handleChange(e, id)}
-              placeholder="Add a comment..."
-            />
-            <div className="add-comment-inner">
-              <img src={currentUser.image.webp} alt="user-image" />
-              <button 
-                onClick={() => handleReplyComment(id, username, commentIndex, createdAt)} 
-                className="reply reply-btn"
-              >
-                reply
-              </button>
-            </div>
-          </Sections>
+         <ReplyWrapper
+          id={id}
+          openIndex={openIndex}
+          isCurrentUser={currentUser.image.webp}
+          username={username}
+          commentCharCount={commentCharCount}
+          commentIndex={commentIndex}
+          createdAt={createdAt}
+          commentText={commentText}
+          currentUser={currentUser}
+          maxTxt={maxTxt}
+          handleReplyComment={handleReplyComment}
+          handleChange={handleChange}
+          />
           //  new comments end here
         }
         {/* rendering the relies in comment */}
@@ -148,25 +137,18 @@ export default function Comment() {
               ) => (
                 <Sections key={replyId}>
                   <Sections className={`reply-section  ${newReplies && "open"}`}>
-                    <div className="username-wrapper reply-names-wrapper">
-                      <img className="user-img" src={replyImage.png} alt={replyUsername} />
-                      <p className="username reply-username">{replyUsername}</p>
-                      <p
-                        className={`you`}
-                        style={{ display: replyUsername === isCurrentUser ? "" : "none" }}
-                      >
-                        you
-                      </p>
-                      <span 
-                        className="date" 
-    
-                      >
-                        {newCommentReplies.some((newReply) => newReply.id === replyId)
+                    <UsernameWrapper
+                      imageSrc={replyImage.png}
+                      altText={replyUsername}
+                      username={replyUsername}
+                      isCurrentUser={replyUsername === isCurrentUser}
+                      formattedTime={
+                        newCommentReplies.some((newReply) => newReply.id === replyId)
                           ? formatTimeDistance(parseISO(replyCreatedAt))
                           : replyCreatedAt
-                        }
-                      </span>
-                    </div>
+                      }
+                    />
+
                     <div>
                       { editingCommentId === replyId ? (
                         <TextArea 
@@ -222,52 +204,35 @@ export default function Comment() {
                     )}
                   </div>
                   {openIndex === replyIndex && 
-                    <Sections  
-                      className={`reply-section-inner ${openIndex === replyIndex && "open"} `}
-                      style={{display: replyUsername === isCurrentUser && "none"}}
-                    >
-                      <span
-                        style={{display: !commentCharCount[replyId] || 0 < 0 ? "none" : ""}}
-                      >
-                      {commentCharCount[replyId] || 0}/{maxTxt}</span>
-                      <textarea
-                        value={commentText[replyId] || ""}
-                        onChange={(e) => handleChange(e, replyId)}
-                        placeholder="Add a comment..."
-                      />
-
-                      <div className="add-comment-inner">
-                        <img src={currentUser.image.webp} alt="user-image" />
-                        <button 
-                          className="reply reply-btn"
-                          onClick={() => handleReplyForReply(replyId, replyUsername)}
-                        >
-                          reply
-                        </button>
-                      </div>
-                    </Sections>}
-                    {/* render newReply in replies */}
-                    <div className="new-reply-for-replies">
+                    <ReplyWrapper
+                      id={replyId}
+                      openIndex={replyIndex}
+                      username={replyUsername}
+                      createdAt={replyContent}
+                      commentCharCount={commentCharCount}
+                      commentIndex={replyIndex}
+                      handleChange={handleChange}
+                      commentText={commentText}
+                      maxTxt={maxTxt}
+                      currentUser={currentUser}
+                      isCurrentUser={isCurrentUser}
+                      handleReplyComment={() => handleReplyForReply(replyId, replyUsername)}
+                    />
+                  }
+                  {/* render newReply in replies */}
+                  <div className="new-reply-for-replies">
                     {newReplies
                       .filter((newReply) => newReply.replyingTo === replyUsername)
                       .map((newReply) => (
                       <div key={newReply.id}>
                         <Sections className={`reply-section ${slide ? "open" : ""}`}>
-                          <div className="username-wrapper reply-names-wrapper">
-                            <img className="user-img" src={newReply.user.image.png} alt={newReply.user.username} />
-                            <p className="username reply-username">{newReply.user.username}</p>
-                            <p
-                              className={`you`}
-                              style={{ display: newReply.user.username === isCurrentUser ? "" : "none" }}
-                            >
-                              you
-                            </p>
-                            <span 
-                              className="date"
-                            >
-                              {formatTimeDistance(parseISO(newReply.createdAt))}
-                            </span>
-                          </div>
+                          <UsernameWrapper
+                            imageSrc={newReply.user.image.png}
+                            altText={newReply.user.username}
+                            username={newReply.user.username}
+                            isCurrentUser={newReply.user.username === isCurrentUser}
+                            formattedTime={formatTimeDistance(parseISO(newReply.createdAt))}
+                          />
                           <div>
                             {editingCommentId === newReply.id ? (
                               <TextArea 

@@ -7,6 +7,8 @@ html, body{
     font-family: 'Rubik', sans-serif;
     max-width: 1440px;
     scroll-behavior: smooth;
+    -webkit-user-select: none;
+    user-select: none;
     
 }
 :root{
@@ -52,9 +54,7 @@ html, body{
     padding: 1em;
 }
 
-.comment-section-reply {
-    margin: 1.1em 0 1.3em;
-}
+
 .scores-wrapper {
     gap: 0.8em;
 }
@@ -139,16 +139,12 @@ html, body{
     background-color: var(--Very-light-gray);
 }
 
-.reply-names-wrapper{
-    gap: .7em;
-}
+
 .reply-wrapper, .edit-wrapper {
  gap: 1em;
  justify-content: space-between;
 }
-.reply-username {
-    font-size: 18px;
-}
+
 
 .edit-wrapper button {
     gap: .18em;
