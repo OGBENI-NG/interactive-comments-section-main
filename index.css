@@ -25,10 +25,10 @@ html, body{
 }
 
 /* all flex container */
-.username-wrapper, .scores-wrapper, .reply-wrapper, .reply,
+.username-wrapper, .scores-wrapper, .reply,
 .add-comment-inner,
 .modal-btn-wrapper, .del-btn, .edit-btn, .edit-wrapper button, 
-.edit-wrapper, .plus-btn .minus-btn .delete-and-edit-wrapper {
+.plus-btn .minus-btn .delete-and-edit-wrapper {
     display: flex;
     align-items: center;
 }

@@ -296,24 +296,24 @@ export default function Comment() {
                               onClick={() => handleUpdateReplyForReply(newReply.id, replyIndex, replyId)}
                             >update</button>
                             ) : (
-                              <EditWrapper 
-                                plusIcon={plusIcon}
-                                minusIcon={minusIcon}
-                                deleteIcon={deleteIcon}
-                                user={newReply.user}
-                                editIcon={editIcon}
-                                username={newReply.username}
-                                isCurrentUserReply={newReply.user.username === isCurrentUser}
-                                id={newReply.id}
-                                replyIndex={replyIndex}
-                                score={newReply.score}
-                                handleLike={() => handleLikeForReply(id, true, newReply.id, replyIndex)}
-                                handleUnlike={() => handleUnlikeForReply(id, true, newReply.id, replyIndex)}
-                                handleEditToggle={handleEditToggle}
-                                handleToggleDelete={handleToggleDelete}
-                                handleToggle={() => handleToggle(replyIndex)}
-                                
-                              />
+                            <EditWrapper 
+                              plusIcon={plusIcon}
+                              minusIcon={minusIcon}
+                              deleteIcon={deleteIcon}
+                              user={newReply.user}
+                              editIcon={editIcon}
+                              username={newReply.username}
+                              isCurrentUserReply={newReply.user.username === isCurrentUser}
+                              id={newReply.id}
+                              replyIndex={replyIndex}
+                              score={newReply.score}
+                              handleLike={() => handleLikeForReply(id, true, newReply.id, replyIndex)}
+                              handleUnlike={() => handleUnlikeForReply(id, true, newReply.id, replyIndex)}
+                              handleEditToggle={handleEditToggle}
+                              handleToggleDelete={handleToggleDelete}
+                              handleToggle={() => handleToggle(replyIndex)}
+                              
+                            />
                           )}
                         </Sections>
                         <div>
