@@ -34,18 +34,15 @@ export default function EditWrapper({
                         {currentUser ? (
                               <div className="edit-wrapper">
                                     <button className="del-btn" onClick={() => handleToggleDelete(id)}>
-                                          <img src={deleteIcon} alt="delete-icon" />
-                                          delete
+                                          <img src={deleteIcon} alt="delete-icon" />delete
                                     </button>
                                     <button className="edit-btn" onClick={() => handleEditToggle(id)}>
-                                          <img src={editIcon} alt="edit-icon"  />
-                                          edit
+                                          <img src={editIcon} alt="edit-icon"  />edit
                                     </button>
                               </div>
                               ) : (
                               <button className="reply" onClick={() => handleToggle(commentIndex)}>
-                                    <img src={replyIcon} alt="reply-icon" />
-                                    reply
+                                    <img src={replyIcon} alt="reply-icon" />reply
                               </button>
                         )}
                   </Sections>

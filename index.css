@@ -26,7 +26,7 @@ html, body{
 
 /* all flex container */
 .username-wrapper, .scores-wrapper, .reply,
-.add-comment-inner,
+.add-comment-inner, .reply-wrapper,
 .modal-btn-wrapper, .del-btn, .edit-btn, .edit-wrapper button, 
 .plus-btn .minus-btn .delete-and-edit-wrapper {
     display: flex;
@@ -154,6 +154,7 @@ html, body{
 .edit-wrapper {
     margin: 0;
 }
+
 
 .edit-wrapper button {
     gap: .25em;
