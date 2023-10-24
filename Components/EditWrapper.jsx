@@ -14,6 +14,7 @@ export default function EditWrapper({
                   <div className="scores-wrapper">
                        <button className='plus-btn'>
                               <img
+                                    className='plus'
                                     src={plusIcon}
                                     alt="plus-icon"
                                     onClick={() => handleLike(id)}

@@ -151,15 +151,18 @@ html, body{
 .reply-names-wrapper{
     gap: .7em;
 }
+.reply-wrapper {
+ gap: .5em;
+}
 .reply-username {
     font-size: 18px;
 }
 .delete-and-edit-wrapper {
     margin: 0 0 0 auto;
 }
-.edit-wrapper {
+/* .edit-wrapper {
     border: 1px solid #333;
-}
+} */
 
 .edit-wrapper button {
     gap: .25em;
@@ -187,7 +190,10 @@ html, body{
 }
 .minus {
     padding-bottom: .2em;
-    margin-left: -.15em;
+    
+}
+.plus {
+    margin-left: .1em;
 }
 .reply-section, .send-comment-wrapper, .reply-section-inner {
     background-color: var(--White);
