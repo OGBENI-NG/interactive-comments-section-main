@@ -27,7 +27,7 @@ export default function Comment() {
     handleReplyComment, handleUpdateCommentReply, handleReplyForReply,
     currentUser, data, maxTxt, handleDeleteComment, handleDeleteReplyInComment,
     slide, handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId,
-    handleCancelDelete
+    handleCancelDelete, textAreaRef
   } = useCustomHook(null)
 
   //comment section
@@ -158,6 +158,7 @@ export default function Comment() {
                           content={replyContent}
                           maxTxt={maxTxt}
                           commentText={commentText}
+                          
                         />
                         
                       ) : (

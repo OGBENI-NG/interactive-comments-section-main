@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import { useRef, useEffect, useState, useCallback, useMemo} from 'react';
 import data from '../data';
 
 export default function useCustomHook(initialValue) {
@@ -8,18 +8,34 @@ export default function useCustomHook(initialValue) {
   const [messageText, setMessageText] = useState("");
   const { currentUser } = data;
   const isCurrentUser = currentUser.username
-  const [comments, setComments] = useState(data.comments);
+  //const [comments, setComments] = useState(data.comments);
   const [commentText, setCommentText] = useState([])
   const [commentCharCount, setCommentCharCount] = useState({});
-  const [newReplies, setNewReplies] = useState([]);
-  const [newCommentReplies, setNewCommentReplies] = useState([]);
+  //const [newReplies, setNewReplies] = useState([]);
+  //const [newCommentReplies, setNewCommentReplies] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [toggleDeleteCommentId, setToggleDeleteCommentId] = useState(null);
   const [slide, setSlide] = useState(false)
   const maxTxt = 250;
+  const textAreaRef = useRef(null);
+
+  // Initialize state with values from localStorage or use default values
+  const [comments, setComments] = useState(() => {
+    const storedComments = localStorage.getItem('comments');
+    return storedComments ? JSON.parse(storedComments) : [];
+  });
+
+  const [newCommentReplies, setNewCommentReplies] = useState(() => {
+    const storedNewCommentReplies = localStorage.getItem('newCommentReplies');
+    return storedNewCommentReplies ? JSON.parse(storedNewCommentReplies) : [];
+  });
+
+  const [newReplies, setNewReplies] = useState(() => {
+    const storedNewReplies = localStorage.getItem('newReplies');
+    return storedNewReplies ? JSON.parse(storedNewReplies) : [];
+  });
+
   
- 
- 
   // Use useCallback for functions that shouldn't trigger unnecessary rerenders
   const handleToggle = useCallback((index) => {
     setOpenIndex((prevOpenIndex) => (prevOpenIndex === index ? null : index));
@@ -235,30 +251,37 @@ export default function useCustomHook(initialValue) {
   }, [comments, commentText, setEditingCommentId, setToggleDeleteCommentId]);
 
   const handleUpdateCommentReply = useCallback((commentId, replyId) => {
-    setComments((prevComments) =>
-      prevComments.map((comment) =>
-        comment.id === commentId
-          ? {
-              ...comment,
-              replies: comment.replies.map((reply) =>
-                reply.id === replyId
-                  ? { ...reply, content: commentText[replyId] || reply.content }
-                  : reply
-              ),
+    setComments((prevComments) => {
+      const updatedComments = prevComments.map((comment) => {
+        if (comment.id === commentId) {
+          const updatedReplies = comment.replies.map((reply) => {
+            if (reply.id === replyId) {
+              return { ...reply, content: commentText[replyId] || reply.content };
             }
-          : comment
-      )
-    );
+            return reply;
+          });
+  
+          return { ...comment, replies: updatedReplies };
+        }
+  
+        return comment;
+      });
+  
+      return updatedComments;
+    });
   
     // Clear the specific replyId in the commentText state
     setCommentText((prevText) => ({ ...prevText, [replyId]: '' }));
+  
     // Clear the specific replyId in the commentCharCount state
     setCommentCharCount((prevCharCount) => ({ ...prevCharCount, [replyId]: 0 }));
+  
     // Add any other logic you need
-    setToggleDeleteCommentId(null)
+    setToggleDeleteCommentId(null);
     setEditingCommentId(null);
-    
-  }, [setCommentText, setCommentCharCount, setEditingCommentId]);
+  
+  }, [setCommentText, setCommentCharCount, setEditingCommentId, commentText]);
+  
  
   const handleReplyForReply = useCallback((replyId, replyingToUser) => {
     const content = commentText[replyId] || ''
@@ -344,9 +367,6 @@ export default function useCustomHook(initialValue) {
       // Filter out the comment with the specified commentId
       const updatedComments = prevComments.filter((comment) => comment.id !== commentId);
   
-      // Update localStorage with the updated comments
-      localStorage.setItem('comments', JSON.stringify(updatedComments));
-  
       return updatedComments;
     });
   }, [setComments]);
@@ -389,6 +409,14 @@ export default function useCustomHook(initialValue) {
   
   }, [setComments, setNewReplies]);
 
+  // Update localStorage whenever the state changes
+  useEffect(() => {
+    localStorage.setItem('comments', JSON.stringify(comments));
+    localStorage.setItem('newCommentReplies', JSON.stringify(newCommentReplies));
+    localStorage.setItem('newReplies', JSON.stringify(newReplies));
+  }, [comments, newCommentReplies, newReplies]);
+  
+
   // Use useMemo for functions that don't depend on changing state
   const memoizedValues = useMemo(() => ({
     commentWrapperRef, handleToggle, openIndex, comments,
@@ -399,7 +427,8 @@ export default function useCustomHook(initialValue) {
     handleUnlikeForReply, handleUpdateReplyForReply, handleReplyComment, 
     handleUpdateCommentReply, handleReplyForReply, currentUser, data,
     maxTxt, handleDeleteComment, handleDeleteReplyInComment, slide,
-    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, handleCancelDelete,
+    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId,
+    handleCancelDelete, textAreaRef
   }), 
   [
     commentWrapperRef, handleToggle, openIndex, comments,
@@ -410,7 +439,8 @@ export default function useCustomHook(initialValue) {
     handleUnlikeForReply, handleUpdateReplyForReply, handleReplyComment, 
     handleUpdateCommentReply, handleReplyForReply, currentUser, data,
     maxTxt, handleDeleteComment, handleDeleteReplyInComment, slide,
-    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, handleCancelDelete,
+    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, 
+    handleCancelDelete, textAreaRef
   ]);
 
   useEffect(() => {
