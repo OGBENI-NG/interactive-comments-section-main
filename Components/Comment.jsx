@@ -92,7 +92,7 @@ export default function Comment() {
                 commentIndex={commentIndex}
               />
             )}
-          </div>
+          </div>///you
         </Sections>
         {/* modal for delete new comment */}
         <div>
