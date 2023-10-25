@@ -77,9 +77,11 @@ html, body{
 }
 
 .content {
+    letter-spacing: .5px;
     line-height: 150%;
     font-size: 17px;
     margin: .5em auto;
+    text-shadow: 0px 0px 1px var(--Grayish-Blue);
 }
 .scores,  .reply {
     font-weight: 700;
