@@ -22,7 +22,7 @@ export default function useCustomHook(initialValue) {
   // Initialize state with values from localStorage or use default values
   const [comments, setComments] = useState(() => {
     const storedComments = localStorage.getItem('comments');
-    return storedComments ? JSON.parse(storedComments) : [];
+    return storedComments ? JSON.parse(storedComments) : data.comments;
   });
 
   const [newCommentReplies, setNewCommentReplies] = useState(() => {
