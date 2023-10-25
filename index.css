@@ -107,7 +107,7 @@ html, body{
     display: block;
 }
 .replies-container {
-    padding-left: .8em;
+    padding-left: .65em;
     border-left: 2.5px solid var(--Light-gray);
 }
 
