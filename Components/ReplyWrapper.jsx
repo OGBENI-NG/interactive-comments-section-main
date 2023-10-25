@@ -14,8 +14,7 @@ export default function ReplyWrapper(
             currentUser,
             createdAt,
             commentText,
-            handleReplyComment,
-            
+            handleReplyComment
       }) {
      
       return (

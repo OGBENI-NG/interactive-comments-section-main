@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback, useMemo} from 'react';
+import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import data from '../data';
 
 export default function useCustomHook(initialValue) {
@@ -17,12 +17,11 @@ export default function useCustomHook(initialValue) {
   const [toggleDeleteCommentId, setToggleDeleteCommentId] = useState(null);
   const [slide, setSlide] = useState(false)
   const maxTxt = 250;
-  const textAreaRef = useRef(null);
 
   // Initialize state with values from localStorage or use default values
   const [comments, setComments] = useState(() => {
     const storedComments = localStorage.getItem('comments');
-    return storedComments ? JSON.parse(storedComments) : data.comments;
+    return storedComments ? JSON.parse(storedComments) : [];
   });
 
   const [newCommentReplies, setNewCommentReplies] = useState(() => {
@@ -36,6 +35,9 @@ export default function useCustomHook(initialValue) {
   });
 
   
+  
+ 
+ 
   // Use useCallback for functions that shouldn't trigger unnecessary rerenders
   const handleToggle = useCallback((index) => {
     setOpenIndex((prevOpenIndex) => (prevOpenIndex === index ? null : index));
@@ -410,12 +412,12 @@ export default function useCustomHook(initialValue) {
   }, [setComments, setNewReplies]);
 
   // Update localStorage whenever the state changes
-  useEffect(() => {
-    localStorage.setItem('comments', JSON.stringify(comments));
-    localStorage.setItem('newCommentReplies', JSON.stringify(newCommentReplies));
-    localStorage.setItem('newReplies', JSON.stringify(newReplies));
-  }, [comments, newCommentReplies, newReplies]);
-  
+ useEffect(() => {
+  localStorage.setItem('comments', JSON.stringify(comments));
+  localStorage.setItem('newCommentReplies', JSON.stringify(newCommentReplies));
+  localStorage.setItem('newReplies', JSON.stringify(newReplies));
+}, [comments, newCommentReplies, newReplies]);
+
 
   // Use useMemo for functions that don't depend on changing state
   const memoizedValues = useMemo(() => ({
@@ -427,8 +429,7 @@ export default function useCustomHook(initialValue) {
     handleUnlikeForReply, handleUpdateReplyForReply, handleReplyComment, 
     handleUpdateCommentReply, handleReplyForReply, currentUser, data,
     maxTxt, handleDeleteComment, handleDeleteReplyInComment, slide,
-    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId,
-    handleCancelDelete, textAreaRef
+    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, handleCancelDelete,
   }), 
   [
     commentWrapperRef, handleToggle, openIndex, comments,
@@ -439,8 +440,7 @@ export default function useCustomHook(initialValue) {
     handleUnlikeForReply, handleUpdateReplyForReply, handleReplyComment, 
     handleUpdateCommentReply, handleReplyForReply, currentUser, data,
     maxTxt, handleDeleteComment, handleDeleteReplyInComment, slide,
-    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, 
-    handleCancelDelete, textAreaRef
+    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, handleCancelDelete,
   ]);
 
   useEffect(() => {

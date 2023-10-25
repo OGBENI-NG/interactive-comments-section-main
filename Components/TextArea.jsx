@@ -1,5 +1,11 @@
-function TextArea({ commentText, id, content, handleChange, commentCharCount, maxTxt}) {
-      const { textAreaRef } = useCustomHook(initialValue);
+import React,{useEffect} from "react";
+
+function TextArea({ commentText, id, content, handleChange, commentCharCount, maxTxt, textAreaRef, setFocus }) {
+      useEffect(() => {
+        if (textAreaRef && textAreaRef.current) {
+          textAreaRef.current.focus();
+        }
+      }, [textAreaRef]);
     
       return (
         <section className="edit-reply-inner">
@@ -16,4 +22,5 @@ function TextArea({ commentText, id, content, handleChange, commentCharCount, ma
     }
     
     export default TextArea;
+    
     

@@ -9,6 +9,9 @@ import {
   parseISO } from "date-fns";
 
 
+const formatUnit = (value, singularUnit, pluralUnit) =>
+  `${value} ${value === 1 ? singularUnit : pluralUnit}`;
+
 const formatTimeDistance = (createdAt) => {
   try {
     const now = new Date();
@@ -23,23 +26,17 @@ const formatTimeDistance = (createdAt) => {
     if (secondsDifference < 60) {
       return "just now";
     } else if (minutesDifference < 60) {
-      const formattedMinutes = minutesDifference === 1 ? "min" : "mins";
-      return `${minutesDifference} ${formattedMinutes} ago`;
+      return formatUnit(minutesDifference, "min", "mins") + " ago";
     } else if (hoursDifference < 24) {
-      const formattedHours = hoursDifference === 1 ? "hour" : "hours";
-      return `${hoursDifference} ${formattedHours} ago`;
+      return formatUnit(hoursDifference, "hour", "hours") + " ago";
     } else if (daysDifference < 7) {
-      const formattedDays = daysDifference === 1 ? "day" : "days";
-      return `${daysDifference} ${formattedDays} ago`;
+      return formatUnit(daysDifference, "day", "days") + " ago";
     } else if (weeksDifference < 4) {
-      const formattedWeeks = weeksDifference === 1 ? "week" : "weeks";
-      return `${weeksDifference} ${formattedWeeks} ago`;
+      return formatUnit(weeksDifference, "week", "weeks") + " ago";
     } else if (monthsDifference < 12) {
-      const formattedMonths = monthsDifference === 1 ? "month" : "months";
-      return `${monthsDifference} ${formattedMonths} ago`;
+      return formatUnit(monthsDifference, "month", "months") + " ago";
     } else {
-      const formattedYears = yearsDifference === 1 ? "year" : "years";
-      return `${yearsDifference} ${formattedYears} ago`;
+      return formatUnit(yearsDifference, "year", "years") + " ago";
     }
   } catch (error) {
     return "Invalid date";
@@ -47,3 +44,4 @@ const formatTimeDistance = (createdAt) => {
 };
 
 export { formatTimeDistance, parseISO };
+
