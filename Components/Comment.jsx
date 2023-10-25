@@ -11,7 +11,7 @@ import DeleteModal from "./DeleteModal"
 import TextArea from "./TextArea"
 import EditWrapper from "./EditWrapper"
 import ReplyWrapper from "./ReplyWrapper"
-import UsernameWrapper from "./UserNameWrapper"
+import UsernameWrapper from "./UserWrapper"
 
 export default function Comment() {
   
@@ -27,7 +27,7 @@ export default function Comment() {
     handleReplyComment, handleUpdateCommentReply, handleReplyForReply,
     currentUser, data, maxTxt, handleDeleteComment, handleDeleteReplyInComment,
     slide, handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId,
-    handleCancelDelete, textAreaRef
+    handleCancelDelete, 
   } = useCustomHook(null)
 
   //comment section
@@ -92,7 +92,7 @@ export default function Comment() {
                 commentIndex={commentIndex}
               />
             )}
-          </div>///you
+          </div>
         </Sections>
         {/* modal for delete new comment */}
         <div>
