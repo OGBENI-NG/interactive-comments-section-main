@@ -36,7 +36,7 @@ html, body{
 }
 
 .main {
-    padding: 2em 1em 1em;
+    padding: 2em .8em 1em;
     background-color: var(--Very-light-gray);
 }
 .main-inner {
@@ -107,7 +107,7 @@ html, body{
     display: block;
 }
 .replies-container {
-    padding-left: 1em;
+    padding-left: .8em;
     border-left: 2px solid var(--Light-gray);
 }
 
@@ -125,8 +125,9 @@ html, body{
     padding: .3em .6em;
 }
 .date {
-    font-size: 16px;
+    font-size: 1.0625rem;
     font-weight: 500;
+    margin-left: .8em;
 }
 
 .scores-wrapper {
@@ -203,9 +204,24 @@ html, body{
     margin-top: .8em;
     padding: 1em;
 }
-.open {
+.open-new-reply {
     -webkit-animation: open .3s ease 0s 1 normal forwards;
     animation: open .3s ease 0s 1 normal forwards;
+}
+@keyframes open {
+	0% {
+		opacity: 0;
+		-webkit-transform: translateY(-25px);
+		-moz-transform: translateY(-25px);
+		-ms-transform: translateY(-25px);
+		-o-transform: translateY(-25px);
+		transform: translateY(-25px);
+    }
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 .open-new-comment {
     -webkit-animation: slideIn .3s ease 0s 1 normal forwards;
@@ -227,21 +243,6 @@ html, body{
 	}
 }
 
-@keyframes open {
-	0% {
-		opacity: 0;
-		-webkit-transform: translateY(-25px);
-		-moz-transform: translateY(-25px);
-		-ms-transform: translateY(-25px);
-		-o-transform: translateY(-25px);
-		transform: translateY(-25px);
-    }
-
-	100% {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
 .send-comment-wrapper {
     padding: 1em 1.5em 1.5em;
     margin-top: .8em;
@@ -252,7 +253,7 @@ html, body{
     padding-bottom: .4em;
     color: var(--Grayish-Blue);
 }
-textarea {
+textarea, .edit-textarea {
     width: 100%;
     height: 100px;
     max-height: auto;
@@ -334,21 +335,7 @@ button.reply-btn {
 		transform: scale(1);
 	}
 }
-.exit-modal {
-    -webkit-animation: exit .3s ease 0s 1 normal forwards;
-    animation: exit .3s ease 0s 1 normal forwards;
-}
-@keyframes exit {
-	0% {
-		opacity: 1;
-		transform: scale(1.5);
-    }
 
-	100% {
-		opacity: 0;
-		transform: scale(0);
-    }
-}
 .delete-notify-wrapper {
     background-color: var(--White);
     padding: 1.5em;

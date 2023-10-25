@@ -29,6 +29,9 @@ export default function Comment() {
     handleCancelDelete
   } = useCustomHook(null)
 
+  const slideIn = () => {
+    return slide && "open-new-comment"
+  }
   //comment section
   const commentsSection = comments.map(
     ({ id, user: { image, username }, replies, content, score, createdAt},  commentIndex
@@ -42,7 +45,7 @@ export default function Comment() {
     return (
       <Sections key={id}>
         {/* rendering comment and reply comment */}
-        <Sections className={`comment-section ${slide && "open-new-comment"}`}>
+        <Sections className={`comment-section ${slideIn()}`}>
           <div className="comment-section-wrapper">
             <CurrentUserWrapper
                 imageSrc={image.png}
@@ -135,7 +138,7 @@ export default function Comment() {
               }
               ) => (
                 <Sections key={replyId}>
-                  <Sections className={`reply-section  ${newReplies && "open"}`}>
+                  <Sections className={`reply-section  ${newReplies && "open-new-reply"}`}>
                     <CurrentUserWrapper
                       imageSrc={replyImage.png}
                       altText={replyUsername}
