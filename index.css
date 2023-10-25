@@ -108,7 +108,7 @@ html, body{
 }
 .replies-container {
     padding-left: .8em;
-    border-left: 2px solid var(--Light-gray);
+    border-left: 2.5px solid var(--Light-gray);
 }
 
 .you {
