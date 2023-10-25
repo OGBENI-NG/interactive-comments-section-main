@@ -29,7 +29,8 @@ export default function ReplyWrapper({
             <div className="add-comment-inner">
                   <img src={currentUser.image.webp} alt="user-image" />
                   <button 
-                        onClick={() => handleReplyComment(id, username, commentIndex, createdAt)} className="reply reply-btn"
+                        onClick={() => handleReplyComment(id, username, commentIndex, createdAt)} 
+                        className="reply reply-btn"
                   >reply
                   </button>
             </div>

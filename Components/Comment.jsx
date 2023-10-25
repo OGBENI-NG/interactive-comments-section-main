@@ -11,10 +11,9 @@ import DeleteModal from "./DeleteModal"
 import TextArea from "./TextArea"
 import EditWrapper from "./EditWrapper"
 import ReplyWrapper from "./ReplyWrapper"
-import UsernameWrapper from "./UserWrapper"
+import CurrentUserWrapper from "./CurrentUserWrapper"
 
 export default function Comment() {
-  
   //all properties and elements of custom hooks console.log("typing..")
   const {
     comments, commentWrapperRef, handleToggle,
@@ -45,7 +44,7 @@ export default function Comment() {
         {/* rendering comment and reply comment */}
         <Sections className={`comment-section ${slide && "open-new-comment"}`}>
           <div className="comment-section-wrapper">
-            <UsernameWrapper
+            <CurrentUserWrapper
                 imageSrc={image.png}
                 altText={username}
                 username={username}
@@ -137,7 +136,7 @@ export default function Comment() {
               ) => (
                 <Sections key={replyId}>
                   <Sections className={`reply-section  ${newReplies && "open"}`}>
-                    <UsernameWrapper
+                    <CurrentUserWrapper
                       imageSrc={replyImage.png}
                       altText={replyUsername}
                       username={replyUsername}
@@ -228,7 +227,7 @@ export default function Comment() {
                       .map((newReply) => (
                       <div key={newReply.id}>
                         <Sections className={`reply-section ${slide ? "open" : ""}`}>
-                          <UsernameWrapper
+                          <CurrentUserWrapper
                             imageSrc={newReply.user.image.png}
                             altText={newReply.user.username}
                             username={newReply.user.username}

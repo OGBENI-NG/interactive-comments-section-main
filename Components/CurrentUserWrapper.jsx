@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UsernameWrapper = ({ imageSrc, altText, username, isCurrentUser, formattedTime }) => (
+const CurrentUserWrapper = ({ imageSrc, altText, username, isCurrentUser, formattedTime }) => (
       <div className="username-wrapper">
             <img className="user-img" src={imageSrc} alt={altText} />
             <p className="username">{username}</p>
@@ -13,4 +13,4 @@ const UsernameWrapper = ({ imageSrc, altText, username, isCurrentUser, formatted
       </div>
 );
 
-export default UsernameWrapper;
+export default CurrentUserWrapper;
