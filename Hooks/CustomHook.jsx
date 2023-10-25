@@ -8,11 +8,8 @@ export default function useCustomHook(initialValue) {
   const [messageText, setMessageText] = useState("");
   const { currentUser } = data;
   const isCurrentUser = currentUser.username
-  //const [comments, setComments] = useState(data.comments);
   const [commentText, setCommentText] = useState([])
   const [commentCharCount, setCommentCharCount] = useState({});
-  //const [newReplies, setNewReplies] = useState([]);
-  //const [newCommentReplies, setNewCommentReplies] = useState([]);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [toggleDeleteCommentId, setToggleDeleteCommentId] = useState(null);
   const [slide, setSlide] = useState(false)
@@ -34,10 +31,6 @@ export default function useCustomHook(initialValue) {
     return storedNewReplies ? JSON.parse(storedNewReplies) : [];
   });
 
-  
-  
- 
- 
   // Use useCallback for functions that shouldn't trigger unnecessary rerenders
   const handleToggle = useCallback((index) => {
     setOpenIndex((prevOpenIndex) => (prevOpenIndex === index ? null : index));

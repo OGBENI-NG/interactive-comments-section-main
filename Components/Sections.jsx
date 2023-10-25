@@ -1,9 +1,9 @@
-import React from 'react'
-import classNames from 'classnames'
+import React from 'react';
+import classNames from 'classnames';
 
-export default function Sections({children, className, ...props}) {
-  const allClassNames = classNames(className)
-  return (
-    <div className={allClassNames} {...props}>{children}</div>
-  )
-}
+const Sections = React.memo(({ children, className, ...props }) => {
+  const allClassNames = classNames(className);
+  return <div className={allClassNames} {...props}>{children}</div>;
+});
+
+export default Sections;
