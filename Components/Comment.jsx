@@ -143,7 +143,7 @@ export default function Comment() {
                       imageSrc={replyImage.png}
                       altText={replyUsername}
                       username={replyUsername}
-                      isCurrentUser={replyUsername === isCurrentUser}
+                      isCurrentUser={isCurrentUser}
                       formattedTime={
                         newCommentReplies.some((newReply) => newReply.id === replyId)
                           ? formatTimeDistance(parseISO(replyCreatedAt))
@@ -234,7 +234,7 @@ export default function Comment() {
                             imageSrc={newReply.user.image.png}
                             altText={newReply.user.username}
                             username={newReply.user.username}
-                            isCurrentUser={newReply.user.username === isCurrentUser}
+                            isCurrentUser={isCurrentUser}
                             formattedTime={formatTimeDistance(parseISO(newReply.createdAt))}
                           />
                           <div>

@@ -458,9 +458,12 @@ button:active {
         height: 70px;
         width: 70px;
     }
-    .content, .reply-to span {
+    .content {
         font-size: 1.8rem;
+    }
+    .reply-to span {
         margin-top: 0;
+        
     }
     .comment-section, .reply-section {
         padding: 1.5em;
@@ -550,7 +553,6 @@ button:active {
     }
     .content, .reply-to span {
         font-size: 1.5rem;
-        margin-top: 0;
     }
     .comment-section, .reply-section {
         padding: 1.2em;
