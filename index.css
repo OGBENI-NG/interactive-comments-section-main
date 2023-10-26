@@ -40,22 +40,20 @@ html, body{
     position: absolute;
     z-index: 2;
     position: fixed;
-    justify-content: center;
     inset: 1.5em 0;
     margin: 0 auto;
-    width: max-content;
-    padding: .48em .8em;
+    width: 95%;
+    padding: .6em .8em;
     height: max-content;
     background-color: var(--Very-light-gray);
     font-size: 1.25rem;
     color: var(--Moderate-blue);
     border: 1.5px solid var(--Moderate-blue);
-
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    -ms-border-radius: 50px;
-    -o-border-radius: 50px;
-    border-radius: 50px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    border-radius: 8px;
 }
 .drop-down-notify {
     -webkit-animation: dropDown .5s ease 0s 1 normal forwards;
