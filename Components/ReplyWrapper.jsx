@@ -16,7 +16,7 @@ export default function ReplyWrapper({
 
       return (
       <Sections 
-            className={`reply-section-inner ${openIndex === commentIndex && 'open'}`} 
+            className={`reply-section-inner ${openIndex === commentIndex && 'open-new-reply'}`} 
             style={{ display: shouldDisplay ? 'none' : '' }}
       >
             {renderCharCount()}

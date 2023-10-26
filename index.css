@@ -30,10 +30,57 @@ html, body{
 .username-wrapper, .scores-wrapper, .reply,
 .add-comment-inner, .reply-wrapper,
 .modal-btn-wrapper, .del-btn, .edit-btn, .edit-wrapper button, 
-.plus-btn .minus-btn, .edit-wrapper{
+.plus-btn .minus-btn, .edit-wrapper, .reply-send-msg{
     display: flex;
     align-items: center;
 }
+
+.reply-send-msg {
+    gap: .5em;
+    position: absolute;
+    z-index: 2;
+    position: fixed;
+    justify-content: center;
+    inset: 1.5em 0;
+    margin: 0 auto;
+    width: max-content;
+    padding: .48em .8em;
+    height: max-content;
+    background-color: var(--Very-light-gray);
+    font-size: 1.25rem;
+    color: var(--Moderate-blue);
+    border: 1.5px solid var(--Moderate-blue);
+
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;
+}
+.drop-down-notify {
+    -webkit-animation: dropDown .5s ease 0s 1 normal forwards;
+    animation: dropDown .5s ease 0s 1 normal forwards;
+}
+@keyframes dropDown {
+	0% {
+		opacity: 0;
+		transform: translateY(-250px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.reply-send-msg h3{
+    margin: 0;
+    padding: 0;
+}
+.reply-send-msg img {
+    width: 22px;
+}
+
 
 .main {
     padding: 2em .8em 1em;
@@ -53,8 +100,6 @@ html, body{
     border-radius: 8px;
     padding: 1em;
 }
-
-
 .scores-wrapper {
     gap: 0.8em;
 }
@@ -66,22 +111,20 @@ html, body{
     font-weight: 500;
     color: var(--Dark-blue);
 }
-
 .user-img {
     width: 50px;
 }
 .created, .content, .date {
     font-size: 20px;
     color: var(--Grayish-Blue);
-    font-weight: 400;
+    font-weight: 500;
+    
 }
 
 .content {
-    letter-spacing: .5px;
     line-height: 150%;
     font-size: 17px;
     margin: .5em auto;
-    text-shadow: 0px 0px 1px var(--Grayish-Blue);
 }
 .scores,  .reply {
     font-weight: 700;
@@ -103,7 +146,7 @@ html, body{
     color: var(--Moderate-blue);
 }
 .reply-to span {
-    font-weight: 400;
+    font-weight: 500;
     font-size: 17px;
     color: var(--Grayish-Blue);
     display: block;
@@ -207,7 +250,7 @@ html, body{
     padding: 1em;
 }
 .open-new-reply {
-    -webkit-animation: open .3s ease 0s 1 normal forwards;
+    -webkit-animation: open 2s ease 0s 1 normal forwards;
     animation: open .3s ease 0s 1 normal forwards;
 }
 @keyframes open {

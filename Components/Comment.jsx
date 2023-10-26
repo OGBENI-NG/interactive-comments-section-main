@@ -4,6 +4,7 @@ import minusIcon from "../images/icon-minus.svg"
 import replyIcon from "../images/icon-reply.svg"
 import editIcon from "../images/icon-edit.svg"
 import deleteIcon from "../images/icon-delete.svg"
+import checkMark from "../images/check-mark.svg"
 import Sections from "./Sections"
 import {formatTimeDistance, parseISO} from "../utilities"
 import useCustomHook from "../Hooks/CustomHook"
@@ -12,6 +13,7 @@ import TextArea from "./TextArea"
 import EditWrapper from "./EditWrapper"
 import ReplyWrapper from "./ReplyWrapper"
 import CurrentUserWrapper from "./CurrentUserWrapper"
+
 
 export default function Comment() {
   //all properties and elements of custom hooks console.log("typing..")
@@ -26,12 +28,10 @@ export default function Comment() {
     handleReplyComment, handleUpdateCommentReply, handleReplyForReply,
     currentUser, data, maxTxt, handleDeleteComment, handleDeleteReplyInComment,
     slide, handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId,
-    handleCancelDelete
+    handleCancelDelete, showNotify, notifyText
   } = useCustomHook(null)
 
-  const slideIn = () => {
-    return slide && "open-new-comment"
-  }
+  
   //comment section
   const commentsSection = comments.map(
     ({ id, user: { image, username }, replies, content, score, createdAt},  commentIndex
@@ -45,7 +45,7 @@ export default function Comment() {
     return (
       <Sections key={id}>
         {/* rendering comment and reply comment */}
-        <Sections className={`comment-section ${slideIn()}`}>
+        <Sections className={`comment-section ${slide && "open-new-comment"}`}>
           <div className="comment-section-wrapper">
             <CurrentUserWrapper
                 imageSrc={image.png}
@@ -229,7 +229,7 @@ export default function Comment() {
                       .filter((newReply) => newReply.replyingTo === replyUsername)
                       .map((newReply) => (
                       <div key={newReply.id}>
-                        <Sections className={`reply-section ${slide ? "open" : ""}`}>
+                        <Sections className={`reply-section ${slide &&"open-new-reply"}`}>
                           <CurrentUserWrapper
                             imageSrc={newReply.user.image.png}
                             altText={newReply.user.username}
@@ -304,6 +304,12 @@ export default function Comment() {
   return (
     
     <div ref={commentWrapperRef}>
+       {showNotify && (
+        <div className={`reply-send-msg ${showNotify && "drop-down-notify"}`}>
+          <img src={checkMark} alt="check-mark" />
+          <h3>{notifyText}</h3>
+        </div>
+      )}
       <Sections className="reply-comment">
         {commentsSection}
       </Sections>

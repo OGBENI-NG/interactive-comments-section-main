@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import data from '../data';
 
+
 export default function useCustomHook(initialValue) {
   const commentWrapperRef = useRef(null);
   const [openIndex, setOpenIndex] = useState(initialValue)
@@ -12,8 +13,12 @@ export default function useCustomHook(initialValue) {
   const [commentCharCount, setCommentCharCount] = useState({});
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [toggleDeleteCommentId, setToggleDeleteCommentId] = useState(null);
-  const [slide, setSlide] = useState(false)
+  const [slide, setSlide] = useState(null)
   const maxTxt = 250;
+  const [showNotify, setShowNotify] = useState(false);
+  const [notifyText, setNotifyText] = useState("")
+  
+  
 
   // Initialize state with values from localStorage or use default values
   const [comments, setComments] = useState(() => {
@@ -23,7 +28,7 @@ export default function useCustomHook(initialValue) {
 
   const [newCommentReplies, setNewCommentReplies] = useState(() => {
     const storedNewCommentReplies = localStorage.getItem('newCommentReplies');
-    return storedNewCommentReplies ? JSON.parse(storedNewCommentReplies) : [];
+    return storedNewCommentReplies ? JSON.parse(storedNewCommentReplies) : data.comments;
   });
 
   const [newReplies, setNewReplies] = useState(() => {
@@ -31,6 +36,29 @@ export default function useCustomHook(initialValue) {
     return storedNewReplies ? JSON.parse(storedNewReplies) : [];
   });
 
+  function notify() {
+    setTimeout(() => {
+      setShowNotify(true)
+    },200)
+    setTimeout(() => {
+      setShowNotify(false);
+    },4000)
+  }
+
+  function notifyNewComment(newComment) {
+    if (newComment) {
+      setNotifyText("Comment sent");
+    }
+  }
+
+  function notifyReply() {
+    if (newReplies) {
+      setNotifyText("Reply sent");
+    }
+  }
+  
+  
+ 
   // Use useCallback for functions that shouldn't trigger unnecessary rerenders
   const handleToggle = useCallback((index) => {
     setOpenIndex((prevOpenIndex) => (prevOpenIndex === index ? null : index));
@@ -167,6 +195,8 @@ export default function useCustomHook(initialValue) {
       setMessageText("");
       handleToggle(false)
       setSlide(true)
+      notifyNewComment(newComment)
+      notify()
     }
   }, [comments, textArea, handleToggle, setSlide]);
 
@@ -211,6 +241,8 @@ export default function useCustomHook(initialValue) {
     handleToggle(false);
     setSlide(false)
     setToggleDeleteCommentId(null)
+    notifyReply(notifyText)
+    notify()
   }, [comments, commentText, handleToggle, setSlide, setToggleDeleteCommentId]);
  
   //handle update comment in textarea
@@ -326,6 +358,8 @@ export default function useCustomHook(initialValue) {
     setToggleDeleteCommentId(false)
     handleToggle(false);
     setSlide(true)
+    notifyReply(newReply)
+    notify()
   }, [comments, commentText, setNewReplies, handleToggle, setSlide, setToggleDeleteCommentId]);
 
   const handleUpdateReplyForReply = useCallback((replyId) => {
@@ -422,7 +456,8 @@ export default function useCustomHook(initialValue) {
     handleUnlikeForReply, handleUpdateReplyForReply, handleReplyComment, 
     handleUpdateCommentReply, handleReplyForReply, currentUser, data,
     maxTxt, handleDeleteComment, handleDeleteReplyInComment, slide,
-    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, handleCancelDelete,
+    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, 
+    handleCancelDelete, showNotify, notifyText
   }), 
   [
     commentWrapperRef, handleToggle, openIndex, comments,
@@ -433,7 +468,8 @@ export default function useCustomHook(initialValue) {
     handleUnlikeForReply, handleUpdateReplyForReply, handleReplyComment, 
     handleUpdateCommentReply, handleReplyForReply, currentUser, data,
     maxTxt, handleDeleteComment, handleDeleteReplyInComment, slide,
-    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, handleCancelDelete,
+    handleDeleteInReply, handleToggleDelete, toggleDeleteCommentId, 
+    handleCancelDelete, showNotify, notifyText
   ]);
 
   useEffect(() => {
