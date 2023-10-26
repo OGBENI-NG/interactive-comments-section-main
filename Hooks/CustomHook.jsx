@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import data from '../data';
 
-
 export default function useCustomHook(initialValue) {
   const commentWrapperRef = useRef(null);
   const [openIndex, setOpenIndex] = useState(initialValue)
@@ -18,8 +17,6 @@ export default function useCustomHook(initialValue) {
   const [showNotify, setShowNotify] = useState(false);
   const [notifyText, setNotifyText] = useState("")
   
-  
-
   // Initialize state with values from localStorage or use default values
   const [comments, setComments] = useState(() => {
     const storedComments = localStorage.getItem('comments');
@@ -28,7 +25,7 @@ export default function useCustomHook(initialValue) {
 
   const [newCommentReplies, setNewCommentReplies] = useState(() => {
     const storedNewCommentReplies = localStorage.getItem('newCommentReplies');
-    return storedNewCommentReplies ? JSON.parse(storedNewCommentReplies) : data.comments;
+    return storedNewCommentReplies ? JSON.parse(storedNewCommentReplies) : [];
   });
 
   const [newReplies, setNewReplies] = useState(() => {

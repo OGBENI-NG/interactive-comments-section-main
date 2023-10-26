@@ -35,7 +35,7 @@ export default function EditWrapper({
 
   const renderReplyButton = () => (
       <button className="reply" onClick={() => handleToggle(commentIndex)}>
-         <img src={replyIcon} alt="reply-icon" />reply
+         <img className='reply-icon' src={replyIcon} alt="reply-icon" />reply
       </button>
   );
 

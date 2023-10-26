@@ -10,7 +10,7 @@ import {formatTimeDistance, parseISO} from "../utilities"
 import useCustomHook from "../Hooks/CustomHook"
 import DeleteModal from "./DeleteModal"
 import TextArea from "./TextArea"
-import EditWrapper from "./EditWrapper"
+import EditAndReplyWrapper from "./EditAndReplyWrapper"
 import ReplyWrapper from "./ReplyWrapper"
 import CurrentUserWrapper from "./CurrentUserWrapper"
 
@@ -76,7 +76,7 @@ export default function Comment() {
                 className="update-btn"
               >update</button>
               ) : (
-              <EditWrapper
+              <EditAndReplyWrapper
                 id={id}
                 score={score}
                 plusIcon={plusIcon}
@@ -176,7 +176,7 @@ export default function Comment() {
                         onClick={() => handleUpdateCommentReply(id, replyId)}
                       >update</button>
                       ):(
-                        <EditWrapper 
+                        <EditAndReplyWrapper 
                           id={replyId}
                           plusIcon={plusIcon}
                           minusIcon={minusIcon}
@@ -259,7 +259,7 @@ export default function Comment() {
                               onClick={() => handleUpdateReplyForReply(newReply.id, replyIndex, replyId)}
                             >update</button>
                             ) : (
-                            <EditWrapper 
+                            <EditAndReplyWrapper 
                               plusIcon={plusIcon}
                               minusIcon={minusIcon}
                               deleteIcon={deleteIcon}
@@ -302,12 +302,11 @@ export default function Comment() {
   })
 
   return (
-    
     <div ref={commentWrapperRef}>
        {showNotify && (
         <div className={`reply-send-msg ${showNotify && "drop-down-notify"}`}>
           <img src={checkMark} alt="check-mark" />
-          <h3>{notifyText}</h3>
+          <p>{notifyText}</p>
         </div>
       )}
       <Sections className="reply-comment">

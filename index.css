@@ -9,6 +9,7 @@ html, body{
     scroll-behavior: smooth;
     -webkit-user-select: none;
     user-select: none;
+    font-size: 16px;
     
 }
 :root{
@@ -40,20 +41,21 @@ html, body{
     position: absolute;
     z-index: 2;
     position: fixed;
-    inset: 1.5em 0;
+    justify-content: center;
+    inset: 1.2em 0;
     margin: 0 auto;
-    width: 95%;
+    width: max-content;
     padding: .6em .8em;
     height: max-content;
     background-color: var(--Very-light-gray);
     font-size: 1.25rem;
     color: var(--Moderate-blue);
-    border: 1.5px solid var(--Moderate-blue);
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
-    border-radius: 8px;
+    border: 1.2px solid var(--Light-grayish-blue);
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;
 }
 .drop-down-notify {
     -webkit-animation: dropDown .5s ease 0s 1 normal forwards;
@@ -70,16 +72,14 @@ html, body{
 		transform: translateY(0);
 	}
 }
-
-.reply-send-msg h3{
+.reply-send-msg p{
     margin: 0;
     padding: 0;
+    font-weight: 500;
 }
 .reply-send-msg img {
     width: 22px;
 }
-
-
 .main {
     padding: 2em .8em 1em;
     background-color: var(--Very-light-gray);
@@ -116,20 +116,17 @@ html, body{
     font-size: 20px;
     color: var(--Grayish-Blue);
     font-weight: 500;
-    
 }
-
 .content {
     line-height: 150%;
     font-size: 17px;
-    margin: .5em auto;
+    margin: .8em auto;
 }
 .scores,  .reply {
     font-weight: 700;
     font-size: 20px;
     color: var(--Moderate-blue);
 }
-
 .reply {
     justify-self: flex-end;
     text-transform: capitalize;
@@ -153,7 +150,6 @@ html, body{
     padding-left: .65em;
     border-left: 2.5px solid var(--Light-gray);
 }
-
 .you {
     font-weight: 500;
     font-size: .8rem;
@@ -170,9 +166,8 @@ html, body{
 .date {
     font-size: 1.0625rem;
     font-weight: 500;
-    margin-left: .8em;
+    margin-left: .5em;
 }
-
 .scores-wrapper {
     padding: .5em .4em;
     -webkit-border-radius: 8px;
@@ -182,14 +177,10 @@ html, body{
     border-radius: 8px;
     background-color: var(--Very-light-gray);
 }
-
-
 .reply-wrapper, .edit-wrapper {
  gap: 1em;
  justify-content: space-between;
 }
-
-
 .edit-wrapper button {
     gap: .18em;
     font-weight: 700;
@@ -222,9 +213,7 @@ html, body{
 }
 .minus {
     padding-bottom: .2em;
-    
 }
-
 .reply-section, .send-comment-wrapper, 
 .reply-section-inner {
     background-color: var(--White);
@@ -237,7 +226,6 @@ html, body{
 .reply-comment{
     margin-top: .5em;
 }
-
 .reply-section{
     padding: 1em;
     margin-top: 1.3em ;
@@ -285,7 +273,6 @@ html, body{
 		transform: translateY(0);
 	}
 }
-
 .send-comment-wrapper {
     padding: 1em 1.5em 1.5em;
     margin-top: .8em;
@@ -299,7 +286,6 @@ html, body{
 textarea, .edit-textarea {
     width: 100%;
     height: 100px;
-    max-height: auto;
     resize: none;
     padding: .8em;
     font-size: 18px;
@@ -426,6 +412,243 @@ button:focus,
 button:active {
     outline: none;
 }
+
+/* Media query for screens wider than 375px (typically smartphones in landscape mode) */
+@media (min-width: 320px) {
+    body {
+      font-size: 16px;
+    }
+    .edit-wrapper {
+        gap: 1.2em;
+    }
+    .edit-wrapper button {
+        font-size: 15px;
+    }
+    .edit-wrapper button img {
+        width: 16px;
+        height: 14px;
+    }
+    .date {
+        font-size: .95rem;
+    }
+    .modal-cancel-btn, .modal-delete-btn {
+        font-size: 1.1rem;
+        padding: .6em .8em;
+    }
+}
+
+/* Media query for screens wider than 480px (apply different styles) */
+@media (min-width: 390px) {
+    .modal-cancel-btn, .modal-delete-btn {
+        font-size: 1.2rem;
+        padding: .7em .9em;
+    }
+}
+@media (min-width: 768px) {
+    .main {
+        padding: 3em 2em 1em;
+    }
+    .username {
+        font-size: 2.5rem;
+    }
+    .date {
+        font-size: 2rem;
+    }
+    .user-img {
+        height: 70px;
+        width: 70px;
+    }
+    .content, .reply-to span {
+        font-size: 1.8rem;
+        margin-top: 0;
+    }
+    .comment-section, .reply-section {
+        padding: 1.5em;
+    }
+    .scores-wrapper {
+        padding: 1.2em;
+        gap: 2em;
+    }
+    .scores {
+        font-size: 1.8em;
+    }
+    .plus, .minus, .reply-icon {
+        width: 22px;
+    }
+    button.reply {
+        gap: .3em;
+        font-size: 1.8rem;
+    } 
+    .reply-section-inner span, 
+    .edit-reply-inner span {
+        font-size: 1.4rem;
+    }
+    .reply-section-inner textarea,
+    .send-comment-wrapper textarea,
+    .edit-textarea {
+        height: 140px;
+        border-width: 2px;
+        font-size: 1.5rem;
+        padding: .5em;
+    }
+    .reply-section-inner .reply-btn,
+    .add-comment-inner .send-btn,
+    .update-btn {
+        padding: .6em 1.2em;
+        font-size: 1.5rem;
+    }
+    .reply-section-inner img,
+    .add-comment-inner img {
+        width: 60px;
+        height: 60px;
+    }
+    .edit-wrapper {
+        gap: 2em;
+    }
+    .edit-wrapper .edit-btn, .edit-wrapper .del-btn {
+        font-size: 1.8rem;
+    }
+    .edit-wrapper button img {
+        width: 23px;
+        height: 20px;
+    }
+    .delete-notify-wrapper {
+        width: 58%;
+    }
+    .delete-notify-wrapper h2 {
+        font-size: 1.8rem;
+    }
+    .delete-notify-wrapper p {
+        font-size: 1.6rem;
+        line-height: 120%;
+        margin: .8em 0;
+    }
+    .modal-cancel-btn, .modal-delete-btn {
+        font-size: 1.4rem;
+        padding: .7em .9em;
+    }
+    .replies-container {
+        padding-left: 1.2em;
+        border-width: 4px;
+    }
+}
+@media (min-width: 1200px) {
+    .main-comments {
+        width: 100%;
+        max-width: 550px;
+        margin: auto;
+    }
+    .username {
+        font-size: 2rem;
+    }
+    .date {
+        font-size: 1.5rem;
+    }
+    .user-img {
+        height: 60px;
+        width: 60px;
+    }
+    .content, .reply-to span {
+        font-size: 1.5rem;
+        margin-top: 0;
+    }
+    .comment-section, .reply-section {
+        padding: 1.2em;
+    }
+    .scores-wrapper {
+        padding: 1em;
+        gap: 2em;
+    }
+    .scores {
+        font-size: 1.8em;
+    }
+    .plus, .minus, .reply-icon {
+        width: 22px;
+    }
+    button.reply {
+        gap: .3em;
+        font-size: 1.8rem;
+    } 
+    .reply-section-inner span, 
+    .edit-reply-inner span {
+        font-size: 1.4rem;
+    }
+    .reply-section-inner textarea,
+    .send-comment-wrapper textarea,
+    .edit-textarea {
+        height: 140px;
+        border-width: 2px;
+        font-size: 1.5rem;
+        padding: .5em;
+    }
+    .reply-section-inner .reply-btn,
+    .add-comment-inner .send-btn,
+    .update-btn {
+        padding: .6em 1.2em;
+        font-size: 1.5rem;
+    }
+    .reply-section-inner img,
+    .add-comment-inner img {
+        width: 60px;
+        height: 60px;
+    }
+    .edit-wrapper {
+        gap: 2em;
+    }
+    .edit-wrapper .edit-btn, .edit-wrapper .del-btn {
+        font-size: 1.8rem;
+    }
+    .edit-wrapper button img {
+        width: 23px;
+        height: 20px;
+    }
+    .delete-notify-wrapper {
+        width: 490px;
+        padding: 2em;
+    }
+    .delete-notify-wrapper h2 {
+        font-size: 2rem;
+    }
+    .delete-notify-wrapper p {
+        font-size: 1.8rem;
+        line-height: 120%;
+        margin: .8em 0;
+    }
+    .modal-cancel-btn, .modal-delete-btn {
+        font-size: 1.6rem;
+        padding: .7em .9em;
+    }
+}
+@media (min-width: 1440px) {
+    .main-comments{
+        width: 100%;
+        max-width: 900px;
+        margin: auto;
+    }
+    .replies-container {
+        padding-left: 1.3em;
+    }
+    .delete-notify-wrapper {
+        width: 500px;
+        padding: 2em;
+    }
+    .delete-notify-wrapper h2 {
+        font-size: 2.3rem;
+    }
+    .delete-notify-wrapper p {
+        font-size: 1.9rem;
+        line-height: 120%;
+        margin: .8em 0;
+    }
+    .modal-cancel-btn, .modal-delete-btn {
+        font-size: 1.6rem;
+        padding: .7em .9em;
+    }
+   
+
+}
+
+
 
 
 
