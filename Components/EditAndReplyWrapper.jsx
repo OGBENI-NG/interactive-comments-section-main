@@ -27,24 +27,36 @@ export default function EditWrapper({
             <button className="del-btn" onClick={() => handleToggleDelete(id)}>
                   <img src={deleteIcon} alt="delete-icon" />delete
             </button>
-            <button className="edit-btn" onClick={() => handleEditToggle(id)}>
+            <button  className="edit-btn" onClick={() => handleEditToggle(id)}>
                   <img src={editIcon} alt="edit-icon" />edit
             </button>
       </div>
   );
 
   const renderReplyButton = () => (
-      <button className="reply" onClick={() => handleToggle(commentIndex)}>
-         <img className='reply-icon' src={replyIcon} alt="reply-icon" />reply
-      </button>
+      <div className='toggle-reply'>
+            <button className="reply" onClick={() => handleToggle(commentIndex)}>
+                  <img className='reply-icon' src={replyIcon} alt="reply-icon" />reply
+            </button>
+      </div>
+      
   );
 
   return (
-    <div className="reply-wrapper">
-            {renderScoreButtons()}
-            <Sections className={currentUser ? 'delete-and-edit-wrapper' : ''}>
-                  {currentUser ? renderEditButtons() : renderReplyButton()}
-            </Sections>
+    <div className='score-and-reply-wrapper'>
+      {renderScoreButtons()}
+
+     {currentUser ?  (
+      <div className="delete-and-edit-wrapper">
+            {renderEditButtons()}
+      </div>
+      ) : (
+      <div >
+            {renderReplyButton()} 
+      </div>
+      )}
+      
+      
     </div>
   );
 }

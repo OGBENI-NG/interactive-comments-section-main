@@ -46,18 +46,19 @@ export default function Comment() {
       <Sections key={id}>
         {/* rendering comment and reply comment */}
         <Sections className={`comment-section ${slide && "open-new-comment"}`}>
-          <div className="comment-section-wrapper">
-            <CurrentUserWrapper
-                imageSrc={image.png}
-                altText={username}
-                username={username}
-                isCurrentUser={isCurrentUser}
-                formattedTime={formattedTime}
-              />
-            <div>
-              <div>
-                {editingCommentId === id ? (
-                  <TextArea
+          <div 
+            className={`comment-section-wrapper ${editingCommentId === id &&       "update-wrapper"}`}>
+              <div className="comment-section-inner">
+                <CurrentUserWrapper
+                  imageSrc={image.png}
+                  altText={username}
+                  username={username}
+                  isCurrentUser={isCurrentUser}
+                  formattedTime={formattedTime}
+                />
+                <div>
+                  {editingCommentId === id ? (
+                    <TextArea
                     id={id}
                     content={content}
                     handleChange={handleChange}
@@ -65,11 +66,13 @@ export default function Comment() {
                     commentCharCount={commentCharCount}
                     maxTxt={maxTxt}
                   />
-                ) : (
-                  <p className="content">{content}</p>
-                )}
+                  ) : (
+                    <p className="content">{content}</p>
+                  )}
+                </div>
               </div>
-            </div>
+            
+            
             {editingCommentId === id ? (
               <button 
                 onClick={() => handleUpdateComment(id)} 
@@ -94,10 +97,10 @@ export default function Comment() {
                 commentIndex={commentIndex}
               />
             )}
-          </div>
-        </Sections>
-        {/* modal for delete new comment */}
+            </div>
+          </Sections>
         <div>
+          {/* modal for delete new comment */}
           {username === isCurrentUser && (
             <DeleteModal
               display={toggleDeleteCommentId === id}
@@ -127,6 +130,7 @@ export default function Comment() {
         }
         {/* rendering the relies in comment */}
         {replies && replies.length > 0 && (
+          <div className="reply-container-wrapper">
           <div className="replies-container">
             {replies.map((
               { id: replyId, 
@@ -138,63 +142,70 @@ export default function Comment() {
               }
               ) => (
                 <Sections key={replyId}>
-                  <Sections className={`reply-section  ${newReplies && "open-new-reply"}`}>
-                    <CurrentUserWrapper
-                      imageSrc={replyImage.png}
-                      altText={replyUsername}
-                      username={replyUsername}
-                      isCurrentUser={isCurrentUser}
-                      formattedTime={
-                        newCommentReplies.some((newReply) => newReply.id === replyId)
-                          ? formatTimeDistance(parseISO(replyCreatedAt))
-                          : replyCreatedAt
-                      }
-                    />
-
-                    <div>
-                      { editingCommentId === replyId ? (
-                        <TextArea 
-                          id={replyId}
-                          handleChange={handleChange}
-                          commentCharCount={commentCharCount}
-                          content={replyContent}
-                          maxTxt={maxTxt}
-                          commentText={commentText}
-                          
-                          
+                  <Sections 
+                    className={`reply-section  ${newReplies && "open-new-reply"}`}
+                  >
+                    <div className={`reply-section-wrapper ${editingCommentId === replyId  && "update-wrapper" }`}>
+                      <div className="reply-inner">
+                        <CurrentUserWrapper
+                          imageSrc={replyImage.png}
+                          altText={replyUsername}
+                          username={replyUsername}
+                          isCurrentUser={isCurrentUser}
+                          formattedTime={
+                            newCommentReplies.some((newReply) => newReply.id === replyId)
+                              ? formatTimeDistance(parseISO(replyCreatedAt))
+                              : replyCreatedAt
+                          }
                         />
-                        
-                      ) : (
-                        <p className="content reply-to">
-                          @{replyToUser} <span>{replyContent}</span>
-                        </p>
+
+                        <div>
+                          { editingCommentId === replyId ? (
+                            <TextArea 
+                              id={replyId}
+                              handleChange={handleChange}
+                              commentCharCount={commentCharCount}
+                              content={replyContent}
+                              maxTxt={maxTxt}
+                              commentText={commentText}
+                              
+                              
+                            />
+                            
+                          ) : (
+                            <p className="content reply-to">
+                              @{replyToUser} 
+                              <span className="reply-content">{replyContent}</span>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      {editingCommentId === replyId ? (
+                        <button 
+                          className="update-btn"
+                          onClick={() => handleUpdateCommentReply(id, replyId)}
+                        >update</button>
+                        ):(
+                          <EditAndReplyWrapper 
+                            id={replyId}
+                            plusIcon={plusIcon}
+                            minusIcon={minusIcon}
+                            replyIcon={replyIcon}
+                            deleteIcon={deleteIcon}
+                            editIcon={editIcon}
+                            username={replyUsername}
+                            replyId={replyId}
+                            handleLike={() => handleLike(id, true, replyId, replyIndex)}
+                            handleUnlike={() => handleUnlike(id, true, replyId, replyIndex)}
+                            handleToggle={() => handleToggle(replyIndex)}
+                            handleEditToggle={handleEditToggle}
+                            handleToggleDelete={handleToggleDelete}
+                            score={replyScore}
+                            isCurrentUser={isCurrentUser}
+                            
+                          />
                       )}
                     </div>
-                    {editingCommentId === replyId ? (
-                      <button 
-                        className="update-btn"
-                        onClick={() => handleUpdateCommentReply(id, replyId)}
-                      >update</button>
-                      ):(
-                        <EditAndReplyWrapper 
-                          id={replyId}
-                          plusIcon={plusIcon}
-                          minusIcon={minusIcon}
-                          replyIcon={replyIcon}
-                          deleteIcon={deleteIcon}
-                          editIcon={editIcon}
-                          username={replyUsername}
-                          replyId={replyId}
-                          handleLike={() => handleLike(id, true, replyId, replyIndex)}
-                          handleUnlike={() => handleUnlike(id, true, replyId, replyIndex)}
-                          handleToggle={() => handleToggle(replyIndex)}
-                          handleEditToggle={handleEditToggle}
-                          handleToggleDelete={handleToggleDelete}
-                          score={replyScore}
-                          isCurrentUser={isCurrentUser}
-                          
-                        />
-                    )}
                   </Sections>
                   <div>
                     {replyUsername === isCurrentUser && (
@@ -230,28 +241,32 @@ export default function Comment() {
                       .map((newReply) => (
                       <div key={newReply.id}>
                         <Sections className={`reply-section ${slide &&"open-new-reply"}`}>
-                          <CurrentUserWrapper
-                            imageSrc={newReply.user.image.png}
-                            altText={newReply.user.username}
-                            username={newReply.user.username}
-                            isCurrentUser={isCurrentUser}
-                            formattedTime={formatTimeDistance(parseISO(newReply.createdAt))}
-                          />
-                          <div>
-                            {editingCommentId === newReply.id ? (
-                              <TextArea 
-                                id={newReply.id}
-                                commentCharCount={commentCharCount}
-                                commentText={commentText}
-                                content={newReply.content}
-                                maxTxt={maxTxt}
-                                handleChange={handleChange}
-                              />
-                            ) : (
-                              <p className="content reply-to">
-                                @{newReply.replyingTo} <span>{newReply.content}</span>
-                              </p>
-                            )}
+                        <div className={`reply-section-wrapper ${editingCommentId === newReply.id  && "update-wrapper" }`}>
+                          <div className="reply-inner">
+                            <CurrentUserWrapper
+                              imageSrc={newReply.user.image.png}
+                              altText={newReply.user.username}
+                              username={newReply.user.username}
+                              isCurrentUser={isCurrentUser}
+                              formattedTime={formatTimeDistance(parseISO(newReply.createdAt))}
+                            />
+                            <div>
+                              {editingCommentId === newReply.id ? (
+                                <TextArea 
+                                  id={newReply.id}
+                                  commentCharCount={commentCharCount}
+                                  commentText={commentText}
+                                  content={newReply.content}
+                                  maxTxt={maxTxt}
+                                  handleChange={handleChange}
+                                />
+                              ) : (
+                                <p className="content reply-to">
+                                  @{newReply.replyingTo} 
+                                  <span className="reply-content">{newReply.content}</span>
+                                </p>
+                              )}
+                            </div>
                           </div>
                           {editingCommentId === newReply.id ? (
                             <button
@@ -278,6 +293,7 @@ export default function Comment() {
                               
                             />
                           )}
+                        </div>
                         </Sections>
                         <div>
                           {newReply.user.username === isCurrentUser &&
@@ -295,6 +311,7 @@ export default function Comment() {
                   </div>
                 </Sections>
             ))}
+          </div>
           </div>
         )}
       </Sections>

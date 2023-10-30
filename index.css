@@ -29,9 +29,10 @@ html, body{
 
 /* all flex container */
 .username-wrapper, .scores-wrapper, .reply,
-.add-comment-inner, .reply-wrapper,
+.add-comment-inner, 
 .modal-btn-wrapper, .del-btn, .edit-btn, .edit-wrapper button, 
-.plus-btn .minus-btn, .edit-wrapper, .reply-send-msg{
+.plus-btn .minus-btn, .edit-wrapper, .reply-send-msg,
+.score-and-reply-wrapper{
     display: flex;
     align-items: center;
 }
@@ -72,6 +73,7 @@ html, body{
 		transform: translateY(0);
 	}
 }
+
 .reply-send-msg p{
     margin: 0;
     padding: 0;
@@ -98,8 +100,14 @@ html, body{
     border-radius: 8px;
     padding: 1em;
 }
+.score-and-reply-wrapper {
+    justify-content: space-between;
+}
 .scores-wrapper {
     gap: 0.8em;
+}
+.toggle-reply {
+    margin-left: auto;
 }
 .username-wrapper{
     gap: .8em;
@@ -112,13 +120,13 @@ html, body{
 .user-img {
     width: 50px;
 }
-.created, .content, .date {
+.created, .content, .date, .reply-content {
     font-size: 20px;
     color: var(--Grayish-Blue);
     font-weight: 500;
 }
 .content {
-    line-height: 150%;
+    line-height: 140%;
     font-size: 17px;
     margin: .8em auto;
 }
@@ -140,10 +148,9 @@ html, body{
     font-size: 20px;
     color: var(--Moderate-blue);
 }
-.reply-to span {
-    font-weight: 500;
+.reply-content {
+   
     font-size: 17px;
-    color: var(--Grayish-Blue);
     display: block;
 }
 .replies-container {
@@ -301,6 +308,9 @@ textarea, .edit-textarea {
 .edit-textarea {
     height: 120px;
 }
+textarea:focus {
+    border-color: var(--Moderate-blue);
+}
 .edit-reply-inner {
     margin: .8em 0 .4em;
 }
@@ -431,6 +441,10 @@ button:active {
     .date {
         font-size: .95rem;
     }
+    .user-img {
+        height: 40px;
+        width: 40px;
+    }
     .modal-cancel-btn, .modal-delete-btn {
         font-size: 1.1rem;
         padding: .6em .8em;
@@ -443,6 +457,7 @@ button:active {
         font-size: 1.2rem;
         padding: .7em .9em;
     }
+   
 }
 @media (min-width: 768px) {
     .main {
@@ -458,13 +473,11 @@ button:active {
         height: 70px;
         width: 70px;
     }
-    .content {
+    .content, .reply-content {
         font-size: 1.8rem;
-    }
-    .reply-to span {
         margin-top: 0;
-        
     }
+    
     .comment-section, .reply-section {
         padding: 1.5em;
     }
@@ -535,100 +548,263 @@ button:active {
         border-width: 4px;
     }
 }
-@media (min-width: 1200px) {
-    .main-comments {
+@media (min-width: 1024px) {
+    button {
+        cursor: pointer;
+    }
+    .main-comments{
         width: 100%;
-        max-width: 550px;
+        max-width: 700px;
         margin: auto;
     }
+    .user-img, .reply-section-inner img, .add-comment-inner img {
+        width: 50px;
+        height: 50px;
+    }
+   
+    .edit-wrapper .edit-btn, .edit-wrapper .del-btn {
+        font-size: .8rem;
+    }
+    .edit-wrapper .edit-btn:hover, .reply:hover {
+        color: var(--Light-grayish-blue);
+    }
+    .update-btn:hover, .send-btn:hover {
+        background-color: var(--Light-grayish-blue);
+    }
+    .edit-wrapper .del-btn:hover {
+        color: var(--Pale-red);
+    }
+    .edit-wrapper button img {
+        width: 14px;
+        height: 12px;
+    }
+    .edit-wrapper {
+        gap: 1em;
+    }
+   
+    .comment-section, .reply-section-inner, 
+    .reply-section {
+        padding: 1.5em;
+        margin-top: 1.2em;
+        position: relative;
+    }
+    .reply-section-inner {
+        margin-top: 1em;
+    }
+    .comment-section-wrapper, .reply-section-wrapper {
+        display: flex;
+        gap: 1em;
+        align-items: flex-start;
+    }
+    .comment-section-inner, .reply-inner {
+        order: 1;
+        position: relative;
+    }
+    .update-wrapper {
+        display: block;
+    }
+   
     .username {
-        font-size: 2rem;
-    }
-    .date {
+        margin: 0;
+        padding: 0;
         font-size: 1.5rem;
     }
-    .user-img {
-        height: 60px;
-        width: 60px;
-    }
-    .content, .reply-to span {
-        font-size: 1.5rem;
-    }
-    .comment-section, .reply-section {
-        padding: 1.2em;
+    .username-wrapper {
+        padding-bottom: 1.2em;
     }
     .scores-wrapper {
-        padding: 1em;
-        gap: 2em;
+        flex-direction: column;
+        order: 0;
+        gap: .8em;
+        padding: .5em;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        border-radius: 10px;
     }
-    .scores {
-        font-size: 1.8em;
+    .plus, .minus {
+        width: 16px;
     }
-    .plus, .minus, .reply-icon {
-        width: 22px;
+    .scores, .date {
+        font-size: 1.2rem;
     }
-    button.reply {
-        gap: .3em;
-        font-size: 1.8rem;
-    } 
-    .reply-section-inner span, 
-    .edit-reply-inner span {
-        font-size: 1.4rem;
+    .toggle-reply, .delete-and-edit-wrapper, 
+    .toggle-reply .reply {
+        position: absolute;
+        right: .8em;
+        
+        top: 1.28em;
     }
+    .toggle-reply .reply {
+        font-size: 1rem;
+    }
+    .delete-and-edit-wrapper {
+        top: 2.6em;
+        right: 1.5em;
+    }
+    .you {
+        font-size: .8rem;
+        margin: 0;
+    }
+    .reply-icon {
+        width: 14px;
+    }
+    .reply-content, .content {
+        font-size: 1.2rem;
+        font-weight: 400;
+        margin-top: .3em;
+        padding-right: 1.2em;
+    }
+    .reply-content, .content.reply-to {
+        margin: 0;
+        padding: 0;
+    }
+     
+    .replies-container, .reply-container-wrapper {
+        padding-left: 1.5em;
+        border-width: 1.8px;
+    }
+    .reply-container-wrapper {
+        padding-left: 2.8em;
+    }
+   
     .reply-section-inner textarea,
     .send-comment-wrapper textarea,
     .edit-textarea {
-        height: 140px;
-        border-width: 2px;
-        font-size: 1.5rem;
-        padding: .5em;
+        font-size: 1.2rem;
     }
-    .reply-section-inner .reply-btn,
-    .add-comment-inner .send-btn,
-    .update-btn {
-        padding: .6em 1.2em;
-        font-size: 1.5rem;
+    .reply-section-inner span, 
+    .edit-reply-inner span {
+        font-size: 1.1rem;
     }
-    .reply-section-inner img,
-    .add-comment-inner img {
-        width: 60px;
-        height: 60px;
-    }
-    .edit-wrapper {
-        gap: 2em;
-    }
-    .edit-wrapper .edit-btn, .edit-wrapper .del-btn {
-        font-size: 1.8rem;
-    }
-    .edit-wrapper button img {
-        width: 23px;
-        height: 20px;
+    .update-btn,  .add-comment-inner .reply-btn, 
+    .send-comment-wrapper .send-btn {
+        font-size: 1.1rem;
     }
     .delete-notify-wrapper {
-        width: 490px;
-        padding: 2em;
+        width: 350px;
+        padding: 1.4em;
     }
     .delete-notify-wrapper h2 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     .delete-notify-wrapper p {
-        font-size: 1.8rem;
+        font-size: 1.0rem;
         line-height: 120%;
-        margin: .8em 0;
+        margin: .9em 0;
     }
     .modal-cancel-btn, .modal-delete-btn {
-        font-size: 1.6rem;
-        padding: .7em .9em;
+        font-size: 1.1rem;
+        padding: .5em .9em;
     }
+   
+   
+   
 }
 @media (min-width: 1440px) {
     .main-comments{
         width: 100%;
-        max-width: 900px;
+        max-width: 970px;
         margin: auto;
     }
-    .replies-container {
-        padding-left: 1.3em;
+    .user-img {
+        width: 50px;
+        height: 50px;
+    }
+    .edit-wrapper .edit-btn, .edit-wrapper .del-btn {
+        font-size: 1.3rem;
+    }
+    .edit-wrapper button img {
+        width: 18px;
+        height: 16px;
+    }
+   
+    .comment-section, .reply-section-inner, 
+    .reply-section {
+        padding: 1.5em 2em;
+        margin-top: 1.5em;
+        position: relative;
+    }
+    .reply-section-inner {
+        margin-top: 1em;
+    }
+    .comment-section-wrapper, .reply-section-wrapper {
+        display: flex;
+        gap: 2em;
+        align-items: flex-start;
+    }
+    .comment-section-inner, .reply-inner {
+        order: 1;
+        position: relative;
+    }
+    .update-wrapper {
+        display: block;
+    }
+   
+    .username {
+        margin: 0;
+        font-size: 1.8rem;
+    }
+    .username-wrapper {
+        padding-bottom: 1.2em;
+    }
+    .scores-wrapper {
+        flex-direction: column;
+        order: 0;
+        gap: 1em;
+        padding: 1em;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        border-radius: 10px;
+    }
+    .plus, .minus {
+        width: 20px;
+    }
+    .scores {
+        font-size: 1.5rem;
+    }
+    .toggle-reply, .delete-and-edit-wrapper, 
+    .toggle-reply .reply {
+        position: absolute;
+        right: .9em;
+        top: 1em;
+    }
+    .toggle-reply .reply {
+        font-size: 1.3rem;
+    }
+    .delete-and-edit-wrapper {
+        top: 2.5em;
+        right: 2em;
+    }
+    .you {
+        font-size: 1rem;
+        margin: 0;
+    }
+    .date {
+        font-size: 1.5em;
+    }
+
+    .reply-icon {
+        width: 18px;
+    }
+    .reply-content, .content {
+        font-size: 1.8rem;
+        font-weight: 400;
+        margin-top: .3em;
+        padding-right: 1.2em;
+    }
+    .reply-content {
+        margin-top: 0;
+    }
+    .replies-container, .reply-container-wrapper {
+        padding-left: 3.8em;
+    }
+    .send-comment-wrapper {
+        margin-top: 1.5em;
+        padding: 1.2em 2em;
     }
     .delete-notify-wrapper {
         width: 500px;
