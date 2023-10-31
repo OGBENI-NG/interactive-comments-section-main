@@ -20,20 +20,23 @@ export default function ReplyWrapper({
             style={{ display: shouldDisplay ? 'none' : '' }}
       >
             {renderCharCount()}
-            <textarea
-                  name="textarea"
-                  value={commentText[id] || ''}
-                  onChange={(e) => handleChange(e, id)}
-                  placeholder="Add a comment..."
-            />
-            <div className="add-comment-inner">
-                  <img src={currentUser.image.webp} alt="user-image" />
+           
+           
+            <div className='reply-wrapper'>
+                  <img className='user-image' src={currentUser.image.webp} alt="user-image" />
+                  <textarea
+                        // name="textarea"
+                        value={commentText[id] || ''}
+                        onChange={(e) => handleChange(e, id)}
+                        placeholder="Add a comment..."
+                  />
                   <button 
                         onClick={() => handleReplyComment(id, username, commentIndex, createdAt)} 
-                        className="reply reply-btn"
+                        className="reply-btn"
                   >reply
                   </button>
             </div>
+            
       </Sections>
       );
 }
