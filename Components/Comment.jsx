@@ -99,7 +99,7 @@ export default function Comment() {
             )}
             </div>
           </Sections>
-        <div>
+        <Sections>
           {/* modal for delete new comment */}
           {username === isCurrentUser && (
             <DeleteModal
@@ -110,7 +110,7 @@ export default function Comment() {
               style={{display: toggleDeleteCommentId !== id && "none"}} 
             />
           )}
-        </div>
+        </Sections>
         {openIndex === commentIndex && 
          <ReplyWrapper
           id={id}
@@ -130,7 +130,7 @@ export default function Comment() {
         }
         {/* rendering the relies in comment */}
         {replies && replies.length > 0 && (
-          <div className="reply-container-wrapper">
+          <Sections className="reply-container-wrapper">
           <div className="replies-container">
             {replies.map((
               { id: replyId, 
@@ -145,7 +145,7 @@ export default function Comment() {
                   <Sections 
                     className={`reply-section  ${newReplies && "open-new-reply"}`}
                   >
-                    <div className={`reply-section-wrapper ${editingCommentId === replyId  && "update-wrapper" }`}>
+                    <Sections className={`reply-section-wrapper ${editingCommentId === replyId  && "update-wrapper" }`}>
                       <div className="reply-inner">
                         <CurrentUserWrapper
                           imageSrc={replyImage.png}
@@ -159,7 +159,7 @@ export default function Comment() {
                           }
                         />
 
-                        <div>
+                        <Sections>
                           { editingCommentId === replyId ? (
                             <TextArea 
                               id={replyId}
@@ -178,7 +178,7 @@ export default function Comment() {
                               <span className="reply-content">{replyContent}</span>
                             </p>
                           )}
-                        </div>
+                        </Sections>
                       </div>
                       {editingCommentId === replyId ? (
                         <button 
@@ -205,9 +205,9 @@ export default function Comment() {
                             
                           />
                       )}
-                    </div>
+                    </Sections>
                   </Sections>
-                  <div>
+                  <Sections>
                     {replyUsername === isCurrentUser && (
                       <DeleteModal
                         display={toggleDeleteCommentId === replyId}
@@ -217,7 +217,7 @@ export default function Comment() {
                         style={{display: toggleDeleteCommentId !== replyId && "none"}} 
                       />
                     )}
-                  </div>
+                  </Sections>
                   {openIndex === replyIndex && 
                     <ReplyWrapper
                       id={replyId}
@@ -235,7 +235,7 @@ export default function Comment() {
                     />
                   }
                   {/* render newReply in replies */}
-                  <div className="new-reply-for-replies">
+                  <Sections className="new-reply-for-replies">
                     {newReplies
                       .filter((newReply) => newReply.replyingTo === replyUsername)
                       .map((newReply) => (
@@ -308,11 +308,11 @@ export default function Comment() {
                         </div>
                       </div>
                     ))} 
-                  </div>
+                  </Sections>
                 </Sections>
             ))}
           </div>
-          </div>
+          </Sections>
         )}
       </Sections>
     )

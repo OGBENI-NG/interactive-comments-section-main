@@ -1,4 +1,5 @@
 import React from 'react';
+import Sections from './Sections';
 
 function TextArea({ commentText, id, content, handleChange, commentCharCount, maxTxt }) {
   const renderCharCount = () => (
@@ -6,7 +7,7 @@ function TextArea({ commentText, id, content, handleChange, commentCharCount, ma
   );
 
   return (
-    <section className="edit-reply-inner">
+    <Sections className="edit-reply-inner">
       <textarea
         name="textarea"
         className="edit-textarea"
@@ -14,7 +15,7 @@ function TextArea({ commentText, id, content, handleChange, commentCharCount, ma
         onChange={(e) => handleChange(e, id)}
       />
       {renderCharCount()}
-    </section>
+    </Sections>
   );
 }
 

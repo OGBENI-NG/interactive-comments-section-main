@@ -22,7 +22,7 @@ export default function ReplyWrapper({
             {renderCharCount()}
            
            
-            <div className='reply-wrapper'>
+            <Sections className='reply-wrapper'>
                   <img className='user-image' src={currentUser.image.webp} alt="user-image" />
                   <textarea
                         // name="textarea"
@@ -35,7 +35,7 @@ export default function ReplyWrapper({
                         className="reply-btn"
                   >reply
                   </button>
-            </div>
+            </Sections>
             
       </Sections>
       );

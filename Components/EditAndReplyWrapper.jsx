@@ -43,20 +43,20 @@ export default function EditWrapper({
   );
 
   return (
-    <div className='score-and-reply-wrapper'>
+    <section className='score-and-reply-wrapper'>
       {renderScoreButtons()}
 
      {currentUser ?  (
-      <div className="delete-and-edit-wrapper">
+      <section className="delete-and-edit-wrapper">
             {renderEditButtons()}
-      </div>
+      </section>
       ) : (
-      <div >
+      <section >
             {renderReplyButton()} 
-      </div>
+      </section>
       )}
       
       
-    </div>
+    </section>
   );
 }

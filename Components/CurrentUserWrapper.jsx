@@ -1,8 +1,9 @@
 import React from 'react';
+import Sections from './Sections';
 
 const CurrentUserWrapper = ({ imageSrc, altText, username, isCurrentUser, formattedTime, display }) => (
      
-      <div className="username-wrapper">
+      <Sections className="username-wrapper">
             <img className="user-img" src={imageSrc} alt={altText} />
             <p className="username">{username}</p>
             <p 
@@ -11,7 +12,7 @@ const CurrentUserWrapper = ({ imageSrc, altText, username, isCurrentUser, format
                   you
             </p>
             <span className="date">{formattedTime}</span>
-      </div>
+      </Sections>
 );
 
 export default CurrentUserWrapper;

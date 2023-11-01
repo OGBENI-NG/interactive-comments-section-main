@@ -4,14 +4,14 @@ import Comment from "./Components/Comment";
 
 export default function App() {
   return (
-    <div className="main">
-      <div className="main-comments" >
+    <main className="main">
+      <Sections className="main-comments" >
         <Sections  className="main-inner">
           <Comment />
         </Sections>
         
-      </div>
+      </Sections>
       
-    </div>
+    </main>
   );
 }
